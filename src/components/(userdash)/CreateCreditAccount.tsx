@@ -8,10 +8,26 @@ import {
 } from "@/components/ui/dialog"
 import { Facebookdata, Googledata, Tiktokdata } from "../Home/Feautures"
 import { useState } from "react"
+import { CreateWallet } from "@/actions/Dashboard/CreditActions"
+import { useUserInfo } from "@/hooks/useUserInfo"
+import { useRouter } from "next/navigation"
 
 export function CreateCreditAccount() {
     const [AccountName, SetAccountName] = useState<string>("")
     const [currency, setcurrency] = useState<string>("USD")
+
+    const userinfo = useUserInfo()
+    const router = useRouter()
+
+    const handleCreate = async ()=>{
+        try {
+            const create = await CreateWallet(userinfo?.id , AccountName , currency )
+            router.refresh()     
+           } catch (error) {
+            console.log(error)
+            alert("error")
+        }
+    }
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -26,7 +42,7 @@ export function CreateCreditAccount() {
                 <div className=" h-[200px] -mt-10">
                     <div className='mt-5'>
                         <div className='text-[#3E4C59] font-semibold'>Account Name</div>
-                        <input type='email' placeholder="Account Name" className="outline-none mt-2 px-[16px] py-[12px] text-[#3E4C59]  w-full border-[1px] rounded-[8px] h-[56px] border-[#E4E7EC] " />
+                        <input value={AccountName} onChange={(e)=>SetAccountName(e.target.value)} type='text' placeholder="Account Name" className="outline-none mt-2 px-[16px] py-[12px] text-[#3E4C59]  w-full border-[1px] rounded-[8px] h-[56px] border-[#E4E7EC] " />
                     </div>
                     <div className="mt-5">
                         <div>Acccount Type</div>
@@ -43,7 +59,7 @@ export function CreateCreditAccount() {
                         <button className="text-[#3E4C59] h-[48px] py-3 w-[180px] px-8 rounded-[4px] border-[1px]">
                             Cancel
                         </button>
-                        <button className="bg-[#4779E8] h-[48px] text-white w-[180px] py-3 px-8 rounded-[4px] border-[1px]">
+                        <button onClick={()=>handleCreate()} className="bg-[#4779E8] h-[48px] text-white w-[180px] py-3 px-8 rounded-[4px] border-[1px]">
                             Save
                         </button>
                     </div>

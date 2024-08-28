@@ -11,10 +11,10 @@ export default function Appointnment({}: Props) {
             <p className='text-left  text-[#3E4C59] mt-5'>Still confused? We got you covered! Our Agents will talk to you and help you out with your issue. Just book an timeslot on the button below and our agent will guide you throughout the process. For immediate assistance reach out to us via WhatsApp.</p>
             <div className='gap-x-[16px] flex mt-10'>
                 <button className=' flex  text-white gap-x-3 bg-[#52CC5A] rounded-[4px] py-[12px] -pb-8 pl-[32px] pr-[24px]'>
-                    <img src='/Home/appoint/wh.png'/> <span>Chat Via Whatsapp</span>
+                    <img src='/Home/appoint/wh.png' alt='wh'/> <span>Chat Via Whatsapp</span>
                 </button>
                 <button className=' flex   text-white gap-x-3 bg-[#4779E8] rounded-[4px] py-[12px] pl-[32px] pr-[24px]'>
-                <img src='/Home/appoint/cal.png'/>Book An Appointment
+                <img src='/Home/appoint/cal.png' alt='cal'/>Book An Appointment
                 </button>
             </div>
         </section>

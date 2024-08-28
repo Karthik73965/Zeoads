@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { verifyToken } from '@/utils/helpers';
 
 import Script from 'next/script';
-import { CreateUser } from '@/app/actions/AuthActions';
-
+import { CreateUser } from '@/actions/AuthActions';
 interface Props { }
 
 export default function Page({ }: Props) {
@@ -38,7 +37,7 @@ export default function Page({ }: Props) {
                         alert(response.message)
                         window.location.reload()
                     }).catch((err) => {
-                        alert(err)
+                        alert(err)  
                     })
                 }).catch((error: any) => {
                     alert(error)
@@ -51,7 +50,7 @@ export default function Page({ }: Props) {
         };
 
         getIdAcessTokenAsync();
-    }, [token, status]);
+    }, [token, status , userId]);
 
     return (
         <main className='pt-10 dh-bg min-h-screen'>

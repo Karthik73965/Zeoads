@@ -9,7 +9,7 @@ export default function Hero({ }: Props) {
     return (
         <main className='px-20 pt-[72px] mt-10 flex flex-1  justify-between'>
             <section>
-                <div className='flex gap-x-3 text-[20px] Neutral5'>Hey there, we're <span className='primary-text'> Zeoads</span> <img src='/home/handshake.svg' alt='handshake' /></div>
+                <div className='flex gap-x-3 text-[20px] Neutral5'>Hey there, we&apos;re <span className='primary-text'> Zeoads</span> <img src='/home/handshake.svg' alt='handshake' /></div>
                 <h1 className='text-[56px] mt-5 font-bold w-[45vw]  leading-[70px]'>
                     <TypeAnimation
                         sequence={[

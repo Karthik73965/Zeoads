@@ -7,22 +7,204 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ------------------------------ USER --------------------------------
 model User {
-  id             String   @id @default(cuid()) @map("_id")
-  userId         String   @unique
+  id             String            @id @default(cuid()) @map("_id")
+  userId         String            @unique
   name           String
-  email          String   @unique
+  email          String            @unique
+  image          String            @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzBXNuO6PezhC18aYH_2cYtS0I7KbxoKYdwA&s")
   country        String
-  monthlyAdSpend String? 
-  whyPerformance String[] @default([])
+  monthlyAdSpend String?
+  whyPerformance String[]          @default([])
   phoneNumber    String
-  role           Role     @default(NONE)
+  role           Role              @default(NONE)
+  // Relations 
+  TestTxns       TestTransaction[]
+  Accounts       Account[]
+  notifications  notification[]
+  wallets        CreditAccount[]
+  invoice        invoice[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------ TEST TRANSACTION --------------------------------
+model TestTransaction {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  amount    Int
+  currency  String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    STATUS
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------ ACCOUNT --------------------------------
+model Account {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String
+  phoneNumber   String
+  model         ACCMODEL
+  type          ADACCOUNT
+  balance       Float
+  creditAccount String
+  currency      String
+  timezone      String
+  weblink       String
+  AddLink       String?   @unique
+  status        STATUS    @default(PENDING)
+  AccName       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountTxns AccountTxns[] // One-to-many relationship with AccountTxns
+}
+
+// ------------------------------ ACCOUNT TRANSACTIONS --------------------------------
+model AccountTxns {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  Acc_id    String   @db.ObjectId
+  account   Account  @relation(fields: [Acc_id], references: [id], onDelete: Cascade) // Relation to Account
+  type      String
+  creditAcc String
+  amount    Int
+  status    STATUS   @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------ CREDIT ACCOUNT --------------------------------
+model CreditAccount {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  currency  String
+  balance   Float
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions CreditTxns[]
+}
+
+model CreditTxns {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  currency     String
+  payment_mode String
+  amount       Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  accountId String ?       @db.ObjectId
+  account   CreditAccount? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+}
+
+// ------------------------------ ANALYTICS --------------------------------
+model MonltyStats {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  Month          String
+  Orders         Int?
+  CollectedFunds Int?
+  PendingFunds   Int?
+  AccountsSold   Int?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
 
+model FundsCollected {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  Month     String
+  amount    Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------ NOTIFICATIONS  -----------------------------------
+
+model notification {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  image_url String?
+  heading   String
+  message   String
+  To        SENDTO
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------ PRODUCT MANAGEMENT  -----------------------------
+model Blog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  image_url String
+  Heading   String
+  Article   String
+  type      BLOGTYPE
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------ UTILS  --------------------------------
+model invoice {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String?
+  type        String?
+  country     String?
+  email       String
+  adress      String?
+  zipcode     String?
+  taxOffice   String?
+  Reg_number  String?
+  phoneNumber String?
+  model       String?
+  currency    String?
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ------------------------------ ENUMS -----------------------------------
 enum Role {
   AGENCY
   ADVERTISER
   NONE
+}
+
+enum STATUS {
+  PENDING
+  COMPLETED
+  CANCELED
+}
+
+enum ACCMODEL {
+  COMMISSION
+  NONCOMMISSION
+}
+
+enum ADACCOUNT {
+  TIKTOK
+  GOOGLE
+  META
+}
+
+enum BLOGTYPE {
+  READ
+  VIEW
+}
+
+enum SENDTO {
+  ALL
+  ACTIVE
+  PAID
+  CUSTOM
 }

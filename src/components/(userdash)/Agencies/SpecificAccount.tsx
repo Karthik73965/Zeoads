@@ -2,13 +2,15 @@ import React from 'react'
 import MainNav from '../MainNav'
 import SpecificSection from './SpecificSection'
 
-type Props = {}
+type Props = {
+    id:string
+}
 
-export default function SpecificMain({ }: Props) {
+export default function SpecificMain({id }: Props) {
     return (
         <main className='w-full  min-h-screen dh-bg'>
             <MainNav />
-            <SpecificSection/>
+            <SpecificSection  id={id}/>
         </main>
 
     )

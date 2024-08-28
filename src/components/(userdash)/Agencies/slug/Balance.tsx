@@ -1,13 +1,17 @@
 import React from 'react'
 
-type Props = {}
+type Props = {
+    id:string , 
+    currency :string | undefined ,  
+    balance:number| undefined
+}
 
-export default function Balance({ }: Props) {
+export default function Balance({ id , currency , balance} : Props) {
     return (
         <section className='mx-5 mt-5 border-[1px] px-[24px] flex justify-between rounded-[8px] h-[150px] py-5'>
             <div>
                 <div className='text-[#3E4C59]'>Total Balance</div>
-                <div className='text-[#1F2933] font-semibold  mt-2 text-[32px]'>$ 123.00</div>
+                <div className='text-[#1F2933] font-semibold  mt-2 text-[32px]'>{currency} {balance}</div>
                 <div className='text-[#727F8F] text-[14px]'>Transfer To Credit Account</div>
             </div>
             <div className='flex gap-[24px] my-auto'>

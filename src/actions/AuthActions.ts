@@ -6,30 +6,22 @@ import { generateRoleToken, generateToken } from "@/utils/jwt"
 
 
 export const CreateUser = async (userId: string, name: string, email: string, phoneNumber: string, country: string) => {
-    console.log({
-        userId,
-        name,
-        email,
-        phoneNumber,
-        country
-    })
+ 
     try {
         const user = await prisma.user.findUnique({
             where: { email }
         })
         if (user) {
-            console.log("user found")
             const token = await generateToken(user)
-            console.log("generated ", token)
             cookies().set("access_token", token, {
-                maxAge: 3060,
+                maxAge: 86400,
                 httpOnly: true,
                 secure: false,
             })
             if (user.role == "NONE") {
                 const roleToken = await generateRoleToken(user.role)
                 cookies().set("role_token", roleToken, {
-                    maxAge: 3060,
+                    maxAge: 86400,
                     httpOnly: true,
                     secure: false,
                 })
@@ -48,11 +40,17 @@ export const CreateUser = async (userId: string, name: string, email: string, ph
                 country
             }
         })
-        console.log("user created")
+        const createCreditAccount = await prisma.creditAccount.create({
+            data:{
+                name :"default" , 
+                currency :"INR",
+                balance :0 , 
+                userId: CreatedUser.id
+            }
+        })
         const token = await generateToken(CreatedUser)
-        console.log("generated ", token)
         cookies().set("access_token", token, {
-            maxAge: 3600,
+            maxAge: 86400,
             httpOnly: true,
             secure: false,
         })

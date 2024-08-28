@@ -1,30 +1,85 @@
-import DashNav from '@/components/(userdash)/DashNav'
-import MainHistory from '@/components/(userdash)/History/MainHistory'
-import MainNav from '@/components/(userdash)/MainNav'
-import PricingChild from '@/components/Pricing/PricingChild'
-import React from 'react'
+"use client";
+import { getAllTxns, purchase5999 } from '@/actions/Dashboard/BillingActions';
+import { useUserInfo } from '@/hooks/useUserInfo';
+import DashNav from '@/components/(userdash)/DashNav';
+import MainNav from '@/components/(userdash)/MainNav';
+import PricingChild from '@/components/Pricing/PricingChild';
+import React, { useCallback, useEffect, useState } from 'react';
 
-type Props = {}
+export default function Page() {
+    const [transactions, setTransactions] = useState<any>(null);
+    const userinfo = useUserInfo();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [status, setStatus] = useState<string>("");
 
-export default function Page({ }: Props) {
+    const Plans = () => {
+        const fetchTxns = useCallback(async () => {
+            try {
+                if (userinfo?.id) {
+                    const data = await getAllTxns(userinfo.id);
+                    setTransactions(data);
+                    if (data) {
+                        // @ts-ignore
+                        evaluateStatus(data);
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }, []);
+    const evaluateStatus = (txns: any[]) => {
+        if (txns.length > 0) {
+            const now = new Date();
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+            const txnThisMonth = txns.find(txn => new Date(txn.createdAt) >= startOfMonth);
+
+            if (txnThisMonth) {
+                setStatus("enjoy");
+            } else {
+                setStatus("continue");
+            }
+        } else {
+            setStatus("purchase");
+        }
+    };
+
+    const handlePay = async () => {
+        try {
+            setLoading(true);
+            const data = await purchase5999(5999, "INR", userinfo?.id);
+            setLoading(false);
+            alert("Transaction successful");
+            fetchTxns(); 
+        } catch (error) {
+            setLoading(false);
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        if (userinfo) {
+            fetchTxns();
+        }
+    }, [ fetchTxns]);
+
     return (
-        <main className='flex  w-full'>
+        <main className='flex w-full'>
             <DashNav route='Plans' />
-           
-            <section className='dh-bg  w-[100vw-252px]'>
+
+            <section className='dh-bg w-[100vw-252px]'>
                 <MainNav />
-            <section className='gap-[24px] mt-5 border-[1px]  border-[#E4E7EC] p-[16px] flex justify-between rounded-[8px]'>
+                <section className='gap-[24px] mt-5 border-[1px] border-[#E4E7EC] p-[16px] flex justify-between rounded-[8px]'>
                     <div className='w-[500px] bg-[#131516] h-[117px] p-[24px] text-white border-[1px] border-[#E4E7EC] rounded-[8px] text-center'>
-                        <h3 className='font-medim  mt-3 text-[24px]'>
+                        <h3 className='font-medim mt-3 text-[24px]'>
                             Plans
                         </h3>
                     </div>
                     <div className='w-[500px] bg-[#131516] h-[117px] p-[24px] text-white border-[1px] border-[#E4E7EC] rounded-[8px] text-center'>
-                        <h3 className='font-medim   text-[24px]'>
+                        <h3 className='font-medim text-[24px]'>
                             Recharge Via Self
-                            <p className='text-center text-[14px] text-[#E4E7EC]' >{"(Non Commission Model)"}</p>
+                            <p className='text-center text-[14px] text-[#E4E7EC]'>{`(Non Commission Model)`}</p>
                         </h3>
-                    </div>  
+                    </div>
                 </section>
                 <section className='flex gap-[16px]'>
                     <PricingChild
@@ -63,16 +118,19 @@ export default function Page({ }: Props) {
                         image8={undefined}
                         text8='INR Accounts - Prepaid<br>USD Accounts - Postpaid'
                     />
-                   
                 </section>
-                <section className='gap-[24px] border-[1px]  border-[#E4E7EC] p-[16px] flex justify-between rounded-[8px]'>
+                <section className='gap-[24px] border-[1px] border-[#E4E7EC] p-[16px] flex justify-between rounded-[8px]'>
                     <div className='w-full bg-[#4779E8] h-[100px] p-[24px] text-white border-[1px] border-[#E4E7EC] rounded-[8px] text-center'>
-                        <h3 className='font-semibold text-[32px]    '>
-                            5999 INR
+                        <h3 onClick={() => status === "purchase" && handlePay()} className='font-semibold cursor-pointer text-[32px]'>
+                            {loading ? "Processing" :
+                                status === "enjoy" ? "Enjoy the Pack" :
+                                    status === "continue" ? "Continue Another Month" :
+                                        "5999 INR"
+                            }
                         </h3>
-                    </div>                    
+                    </div>
                 </section>
             </section>
         </main>
-    )
-}
+    );
+}}

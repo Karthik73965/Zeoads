@@ -3,9 +3,11 @@ import React, { useState } from 'react'
 import Table from '../Table'
 import { CreateAddAccount } from '../../CreateAddAccount'
 
-type Props = {}
+type Props = {
+    id:string
+}
 
-export default function MainSlug({ }: Props) {
+export default function MainSlug({ id}: Props) {
     const [option, setoption] = useState("Add Account")
 
     return (

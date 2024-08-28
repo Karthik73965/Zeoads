@@ -1,57 +1,60 @@
-body{
-    overflow-x: hidden;
+body {
+  overflow-x: hidden;
 }
 .primary-text {
-    color: #4779E8;
+  color: #4779e8;
 }
 
 .Neutral5 {
-    color: #52606D;
+  color: #52606d;
 }
 
 .Neutral4 {
-    color: #3E4C59;
+  color: #3e4c59;
 }
 
 .gradient {
-    background: linear-gradient(270deg, #FFFFFF 0%, #D3DCFF 50.5%, #FFFFFF 100%);
+  background: linear-gradient(270deg, #ffffff 0%, #d3dcff 50.5%, #ffffff 100%);
 }
 
 .demo-wrap {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .demo-bg {
-    opacity: 0.5;
-    position: absolute;
-    width: calc(100vw - 160px);
-    background-position: center;
-    object-fit: cover;
-    height: 304px;
+  opacity: 0.5;
+  position: absolute;
+  width: calc(100vw - 160px);
+  background-position: center;
+  object-fit: cover;
+  height: 304px;
 }
 
 .demo-content {
-    position: relative;
+  position: relative;
 }
 .stats-wrap {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .stats-bg {
-    opacity: 0.4;
-    position: absolute;
-    width: calc(100vw - 160px);
-    background-position: center;
-    object-fit: cover;
-    height: 462px;
+  opacity: 0.4;
+  position: absolute;
+  width: calc(100vw - 160px);
+  background-position: center;
+  object-fit: cover;
+  height: 462px;
 }
 
 .stats-content {
-    position: relative;
+  position: relative;
 }
-.dh-bg{
-    background-color: #F6F7FB;
+.dh-bg {
+  background-color: #f6f7fb;
 }
 
+.thin-scroll {
+  scrollbar-width: thin;
+}

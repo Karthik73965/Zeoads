@@ -10,10 +10,7 @@ export async function generateToken(id: User): Promise<string> {
 
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' }) // HS256 algorithm for signing
-    .setIssuedAt() // Set issued at time (optional)
-    .setIssuer('YOUR_ISSUER') // Set issuer (optional)
-    .setAudience('YOUR_AUDIENCE') // Set audience (optional)
-    .setExpirationTime('24h') // 1 hour expiration
+    .setExpirationTime('24h') 
     .sign(secretKey);
   return token;
 }
@@ -24,9 +21,6 @@ export const generateRoleToken = async (role: string) => {
     const payload = { role };
     const token = await new SignJWT(payload)
       .setProtectedHeader({ alg: 'HS256' }) // HS256 algorithm for signing
-      .setIssuedAt() // Set issued at time (optional)
-      .setIssuer('YOUR_ISSUER') // Set issuer (optional)
-      .setAudience('YOUR_AUDIENCE') // Set audience (optional)
       .setExpirationTime('24h') // 1 hour expiration
       .sign(secretKey);
     return token;

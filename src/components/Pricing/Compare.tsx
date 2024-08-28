@@ -43,7 +43,7 @@ export default function Compare({ }: Props) {
                         <section className='grid'>
                             <section className='flex'>
                                 <div className='border-[1px] pt-5 border-[#E4E7EC]   px-[10px] py-[12px] text-center w-[510px] h-[88px]'>
-                                    These accounts don't have strong reputations . <br /> Low Credibility
+                                    These accounts don&apos;t have strong reputations . <br /> Low Credibility
                                 </div>
                                 <div className='border-[1px] pt-5 border-[#E4E7EC] px-[10px] py-[12px] text-center w-[510px] h-[88px]'>
                                     Trusted and highly reputable advertising accounts. <br />

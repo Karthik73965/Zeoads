@@ -60,7 +60,7 @@ return (
             </section>
         </section>
         <section className='mt-10 flex  flex-1 justify-between'>
-            <img className='w-[564px] h-[320px] rounded-[4px] border-[1px]' src='/utils/StoreisTest.jpeg' />
+            <img className='w-[564px] h-[320px] rounded-[4px] border-[1px]' alt='' src='/utils/StoreisTest.jpeg' />
             <div className='ml-5 '>
                 <h5 className='text-[32px] font-semibold mt-10 '>{text[index]}</h5>
                 <p className='text-[#52606D] mt-5'>{description[index]}</p>

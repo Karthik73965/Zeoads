@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
     const id = await getIdAcessToken(access_token);
     if (id) {
       console.log(id)
-      return NextResponse.redirect(new URL("/", req.url), {
+      return NextResponse.redirect(new URL("/dashboard", req.url), {
         status: 303,
       });
     }

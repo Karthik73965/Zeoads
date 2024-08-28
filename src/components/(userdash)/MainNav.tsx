@@ -2,9 +2,8 @@ import React from 'react'
 import { ProfileToggle } from './Nav/ProfieToggle'
 import { NotificationsToggle } from './Nav/NotificationsToggle'
 
-type Props = {}
 
-export default function MainNav({ }: Props) {
+export default function MainNav() {
   return (
     <header className='h-[84px] w-full flex justify-between py-[16px] px-[24px]  border-b-[1px] brder-[#E4E7EC]'>
       <h3 className='text-[#171C20] gap-[4px] mt-2 flex font-semibold text-[20px]'><div>Good Morning!</div> <img className='w-[32px] -mt-5 ' src='/home/handshake.svg' alt='handshake' /></h3>

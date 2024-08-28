@@ -24,31 +24,31 @@ export function FaqAcc() {
       <AccordionItem value="item-3">
         <AccordionTrigger>Is there any Monthly rental / commission charges or Hidden charges??</AccordionTrigger>
         <AccordionContent>
-          Yes. It's animated by default, but you can disable it if you prefer.
+          Yes. It&lsquo;s animated by default, but you can disable it if you prefer.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-123">
         <AccordionTrigger>How many pages and pixels can be connected to the ad account?</AccordionTrigger>
         <AccordionContent>
-          Yes. It's animated by default, but you can disable it if you prefer.
+          Yes. It&lsquo;s animated by default, but you can disable it if you prefer.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-12123">
         <AccordionTrigger>How do I pay for the ads spend?</AccordionTrigger>
         <AccordionContent>
-          Yes. It's animated by default, but you can disable it if you prefer.
+          Yes. It&lsquo;s animated by default, but you can disable it if you prefer.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-11">
         <AccordionTrigger>What if the accounts are disabled or restricted?</AccordionTrigger>
         <AccordionContent>
-          Yes. It's animated by default, but you can disable it if you prefer.
+          Yes. It&lsquo;s animated by default, but you can disable it if you prefer.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-12">
         <AccordionTrigger>Can I run restricted category ads on these accounts?</AccordionTrigger>
         <AccordionContent>
-          Yes. It's animated by default, but you can disable it if you prefer.
+          Yes. It&lsquo;s animated by default, but you can disable it if you prefer.
         </AccordionContent>
       </AccordionItem>
     </Accordion>
