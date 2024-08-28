@@ -17,7 +17,7 @@ const MainNotify = () => {
     <div className="  p-6 dh-bg rounded-lg mx-5">
       <div className="flex justify-between items-center mb-6">
         <div className="flex space-x-4 rounded-md border-[1px] bg-white p-2">
-          {["Notifications", "Banner CTA Video", "Product Video"].map((tab) => (
+          {["Notifications", "Banner CTA Video", "Product Video"].map((tab:any) => (
             <button
               key={tab}
               className={`px-4 py-2 ${

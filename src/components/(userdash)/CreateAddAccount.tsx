@@ -50,7 +50,7 @@ export function CreateAddAccount() {
   const fetchWallets = useCallback(async () => {
     try {
       const data = await getAllWallets(userinfo.id);
-      const reduced = data?.map((account) => account.name) || [];
+      const reduced = data?.map((account:any) => account.name) || [];
       setWallets(reduced);
     } catch (error) {
       alert(error);
@@ -184,7 +184,7 @@ export function CreateAddAccount() {
                     <option value="" disabled>
                       -- Choose a Wallet --
                     </option>
-                    {wallets.map((wallet, index) => (
+                    {wallets.map((wallet:any, index:number) => (
                       <option key={index} value={wallet}>
                         {wallet}
                       </option>

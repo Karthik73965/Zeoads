@@ -22,7 +22,7 @@ export default function UsersTable({ userinfo }: Props) {
             </section>
 
             {/* User Rows */}
-            {userinfo.map((user, index) => {
+            {userinfo.map((user:any, index:number) => {
                 const transactionDate = user.firstTransaction?.createdAt ? new Date(user.firstTransaction.createdAt) : null;
                 const formattedDate = transactionDate ? transactionDate.toLocaleDateString() : "N/A";
 

@@ -46,7 +46,7 @@ export default function MainRecharge({}: Props) {
       </section>
       <section className="m-5 grid grid-cols-3 gap-5">
         {wallets &&
-          wallets.map((i, index) => (
+          wallets.map((i:any, index:number) => (
             <CreditCard
               key={i.id} // Always add a key when mapping
               balance={i.balance}

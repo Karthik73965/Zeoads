@@ -158,7 +158,7 @@ const ProductEdit = () => {
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Features</label>
             <ul className="space-y-4">
-              {features.map((feature, index) => (
+              {features.map((feature:any, index:any) => (
                 <li key={index} className="flex items-center justify-between">
                   <input
                     type="text"

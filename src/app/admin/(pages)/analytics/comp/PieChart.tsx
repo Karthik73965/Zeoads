@@ -27,7 +27,7 @@ export default function Piechart() {
                                         width={230}
                                         height={230}
                                     >
-                                        {data.map((entry, index) => (
+                                        {data.map((entry:any, index:number) => (
                                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                         ))}
                                     </Pie>

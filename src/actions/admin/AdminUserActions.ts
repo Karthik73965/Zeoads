@@ -16,8 +16,8 @@ export const getAllUsers = async () => {
     });
 
     // Process the users data to include only the first transaction and the sum of wallet balances
-    const processedUsers = users.map((user) => {
-      const totalBalanceByCurrency = user.wallets.reduce((acc, wallet) => {
+    const processedUsers = users.map((user:any) => {
+      const totalBalanceByCurrency = user.wallets.reduce((acc:any, wallet:any) => {
         //@ts-ignore
         if (acc[wallet.currency]) {
           //@ts-ignore

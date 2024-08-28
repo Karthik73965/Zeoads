@@ -69,7 +69,7 @@ export default function Page({ }: Props) {
                 <p className='text-center text-[16px] text-[#3E4C59] mt-2'>ZEOADS is a performance marketing system</p>
                 <center className='mt-10'>
                     {
-                        roleOptions.map((i, index) => (
+                        roleOptions.map((i:any, index:number) => (
                             <div key={index} onClick={() => {
                                 setState(1)
                                 handleRoleChange(i.main)

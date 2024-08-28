@@ -18,7 +18,7 @@ export default function FeauturesHome({ name, image, Heading, description, list 
                 <p className='text-[32px]  font-semibold text-white'>Accounts</p>
                 <p className='text-[20px] mt-5 text-[#E4E7EC] font-medium '>{description}</p>
                 <div className='text-[#F5F6FA] mt-10 h-[328px]  text-[16px]'>
-                {list.map((item, index) => (
+                {list.map((item:any, index:number) => (
                     <div key={index} className=" flex  gap-y-10">
                         <img className='-mt-8' src="/utils/tick.svg" alt="tick" />
                         <p className='ml-5 mb-5'>{item}</p>

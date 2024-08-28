@@ -54,7 +54,7 @@ export default function UserTable({ route }: Props) {
                 <div className='text-[14px]  px-[40px] text-center cursor-pointer font-semibold  w-[170px] text-[#171C20]'>Action</div>
             </section>
             {
-                Accoutns.map((i, index) => {
+                Accoutns.map((i:any, index:number) => {
                     return <section key={index} className='flex justify-between border-b-[1px] h-[42px] py-[12px]  '>
                         <div className='  text-[14px] border-r-[1px]  h-[40px]  pl-6  w-[170px]   px-auto  cursor-pointer font-medium text-[#171C20] pr-[20px] '>{i.name}                       </div>
                         <div className='  text-[14px] border-r-[1px]  pr-4 h-[40px]  w-[170px] px-auto truncate   cursor-pointer font-medium text-[#171C20]'>{i.email}</div>
