@@ -8,10 +8,9 @@ import { useUserInfo } from "@/hooks/useUserInfo";
 import { CreditAccount } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 
-
 export default function MainRecharge({ id }: { id: string }) {
   const [walletData, setWalletData] = useState<CreditAccount | null>(null);
-  const userInfo = useUserInfo() || ""
+  const userInfo = useUserInfo() || { id: "" }; // Default value to prevent null errors
 
   useEffect(() => {
     if (id) {
@@ -43,9 +42,14 @@ export default function MainRecharge({ id }: { id: string }) {
         setStep(2);
       } else if (step === 2 && paymentMethod) {
         // Proceed to payment handling
+        if (!userInfo.id) {
+          alert("User information is missing");
+          return;
+        }
+
         const handleSubmit = await addBalanceTowallet(
           id,
-          userInfo?.id || "",
+          userInfo.id, // Ensuring userInfo.id is not null or undefined
           amount,
           paymentMethod
         );

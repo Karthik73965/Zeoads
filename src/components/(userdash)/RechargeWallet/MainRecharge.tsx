@@ -14,17 +14,20 @@ export default function MainRecharge({}: Props) {
   const userinfo = useUserInfo();
 
   const getwallets = useCallback(async () => {
-    if (userinfo?.id) {
-      const data = await getAllWallets(userinfo.id);
-      setwallets(data);
+    if (userinfo && userinfo.id) {
+      // Add a check for userinfo here
+      try {
+        const data = await getAllWallets(userinfo.id);
+        setwallets(data);
+      } catch (error) {
+        console.error("Error fetching wallets:", error);
+      }
     }
-  }, [userinfo.id]); // Adding userinfo.id as a dependency to useCallback
+  }, [userinfo]); // Adding userinfo as a dependency to useCallback
 
   useEffect(() => {
-    if (userinfo) {
-      getwallets();
-    }
-  }, [userinfo, getwallets]); // No changes needed here
+    getwallets();
+  }, [getwallets]); // No changes needed here
 
   return (
     <main className="w-full min-h-screen dh-bg">
@@ -46,7 +49,7 @@ export default function MainRecharge({}: Props) {
       </section>
       <section className="m-5 grid grid-cols-3 gap-5">
         {wallets &&
-          wallets.map((i:any, index:number) => (
+          wallets.map((i: CreditAccount, index: number) => (
             <CreditCard
               key={i.id} // Always add a key when mapping
               balance={i.balance}

@@ -53,7 +53,7 @@ export default function Page({ }: Props) {
     }, [token, status , userId]);
 
     return (
-        <main className='pt-10 dh-bg min-h-screen'>
+        <main className='pt-10 dh-bg h-screen'>
             <Script
                 strategy="beforeInteractive"
                 id="otpless-sdk"
@@ -61,7 +61,7 @@ export default function Page({ }: Props) {
                 data-appid="40QPLY4PUSRV0E0VMZCU"
                 src="https://otpless.com/v2/auth.js"
             />
-            <div className='mt-10' id="otpless-login-page"></div>
+            <div className='  h-screen' id="otpless-login-page"></div>
         </main>
     );
 }

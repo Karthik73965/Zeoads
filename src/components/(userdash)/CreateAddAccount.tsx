@@ -55,7 +55,7 @@ export function CreateAddAccount() {
     } catch (error) {
       alert(error);
     }
-  }, [userinfo.id]);
+  }, [userinfo?.id]);
 
   useEffect(() => {
     if (userinfo) {
