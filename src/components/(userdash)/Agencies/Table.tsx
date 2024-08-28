@@ -10,11 +10,11 @@ type Props = {
 
 export default function Table({ route }: Props) {
     const [accounts, setAccounts] = useState<any[] | null>([]);
-    const userinfo = useUserInfo();
+    const userinfo = useUserInfo() || ""
 
     const getaccounts = useCallback(async () => {
         try {
-            const data = await getAdAccounts(userinfo?.id);
+            const data = await getAdAccounts(userinfo?.id ||"" );
             console.log(data);
             setAccounts(data);
         } catch (error) {

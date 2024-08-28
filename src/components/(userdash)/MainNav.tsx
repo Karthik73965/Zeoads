@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { ProfileToggle } from './Nav/ProfieToggle'
 import { NotificationsToggle } from './Nav/NotificationsToggle'

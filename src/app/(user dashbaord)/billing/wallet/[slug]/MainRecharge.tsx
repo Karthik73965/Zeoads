@@ -11,32 +11,29 @@ import React, { useEffect, useState } from "react";
 type Props = {};
 
 export default function MainRecharge({ id }: { id: string }) {
-  const [wallerdata, setwalletdata] = useState<CreditAccount | null>(null);
-
-  const userInfo = useUserInfo();
-
+  const [walletData, setWalletData] = useState<CreditAccount | null>(null);
+  const userInfo = useUserInfo() || ""
 
   useEffect(() => {
     if (id) {
       const fetchWalletInfo = async () => {
         try {
-          const data = await getWalletInfo(id);
+          const data = await getWalletInfo(id || "");
           if (data) {
-            setwalletdata(data);
+            setWalletData(data);
             console.log(data);
           } else {
-            alert("invalid id ");
+            alert("Invalid ID");
           }
         } catch (error) {
           console.error(error);
         }
       };
-  
+
       fetchWalletInfo();
     }
   }, [id]);
 
-  // ---------------------------------------------------parent component -----------------------------------------------------
   const PaymentComponent: React.FC = () => {
     const [step, setStep] = useState(1);
     const [amount, setAmount] = useState<number>(0);
@@ -49,12 +46,12 @@ export default function MainRecharge({ id }: { id: string }) {
         // Proceed to payment handling
         const handleSubmit = await addBalanceTowallet(
           id,
-          userInfo?.id,
+          userInfo?.id || "",
           amount,
           paymentMethod
         );
         console.log(handleSubmit);
-        alert(JSON.stringify(handleSubmit))
+        alert(JSON.stringify(handleSubmit));
       }
     };
 
@@ -70,12 +67,12 @@ export default function MainRecharge({ id }: { id: string }) {
                 }`}
               />
               <span
-                className={` mt-2 ${
+                className={`mt-2 ${
                   step >= 1 ? "text-black font-semibold" : "text-gray-500"
                 }`}
               >
                 Amount
-                <p className=" text-[#3E4C59] text-[14px] ">
+                <p className="text-[#3E4C59] text-[14px]">
                   Amount you want to add
                 </p>
               </span>
@@ -89,23 +86,21 @@ export default function MainRecharge({ id }: { id: string }) {
               />
               <span
                 className={`${
-                  step >= 2
-                    ? "text-black font-semibold"
-                    : "text-black font-semibold"
+                  step >= 2 ? "text-black font-semibold" : "text-gray-500"
                 }`}
               >
                 Payment Method
-                <p className=" text-[#3E4C59] text-[14px] ">
+                <p className="text-[#3E4C59] text-[14px]">
                   Choose payment method for your payment
                 </p>
               </span>
             </div>
             <div className="h-20 -my-5 w-1 bg-gray-300 ml-2" />
             <div className="flex items-center space-x-4">
-              <div className={`w-5 h-5 rounded-full bg-gray-300`} />
+              <div className="w-5 h-5 rounded-full bg-gray-300" />
               <span className="text-black font-semibold">
-                Payment{" "}
-                <p className=" text-[#3E4C59] text-[14px] ">Payment details</p>
+                Payment
+                <p className="text-[#3E4C59] text-[14px]">Payment details</p>
               </span>
             </div>
           </div>
@@ -123,11 +118,11 @@ export default function MainRecharge({ id }: { id: string }) {
                   className="w-full border p-3 rounded"
                   defaultValue="Main Wallet"
                 >
-                  <option>{wallerdata?.name}</option>
+                  <option>{walletData?.name || ""}</option>
                 </select>
               </div>
               <div className="flex items-center mb-4">
-                <span className="mr-2">{wallerdata?.currency}</span>
+                <span className="mr-2">{walletData?.currency || ""}</span>
                 <input
                   type="number"
                   className="outline-none border-[1px] p-3 w-[364px] rounded"
@@ -136,7 +131,7 @@ export default function MainRecharge({ id }: { id: string }) {
                 />
               </div>
               <div className="text-sm ml-5 text-gray-500 mb-4">
-                Current Balance: {wallerdata?.balance}
+                Current Balance: {walletData?.balance || ""}
               </div>
               <button
                 className="w-[364px] p-3 bg-blue-500 text-white ml-5 rounded"
