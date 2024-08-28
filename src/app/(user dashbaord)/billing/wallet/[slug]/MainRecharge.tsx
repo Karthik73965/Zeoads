@@ -8,7 +8,6 @@ import { useUserInfo } from "@/hooks/useUserInfo";
 import { CreditAccount } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 
-type Props = {};
 
 export default function MainRecharge({ id }: { id: string }) {
   const [walletData, setWalletData] = useState<CreditAccount | null>(null);

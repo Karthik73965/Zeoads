@@ -1,6 +1,11 @@
 "use client";
-import DashNav from "@/components/(userdash)/DashNav";
-import MainRecharge from "@/components/(userdash)/RechargeWallet/MainRecharge";
+import dynamic from "next/dynamic";
+const MainRecharge = dynamic(()=>import('@/components/(userdash)/RechargeWallet/MainRecharge') , {
+  ssr:false
+})
+const DashNav = dynamic(()=>import('@/components/(userdash)/DashNav') , {
+  ssr:false
+})
 import React from "react";
 import { Suspense } from "react";
 

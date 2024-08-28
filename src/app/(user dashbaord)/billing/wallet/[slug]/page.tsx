@@ -1,17 +1,21 @@
 "use client";
 
-import DashNav from "@/components/(userdash)/DashNav";
 import React from "react";
-import MainRecharge from "./MainRecharge";
+import dynamic from "next/dynamic";
+const MainRecharge = dynamic(()=>import('./MainRecharge') , {
+  ssr:false
+})
+const DashNav = dynamic(()=>import('@/components/(userdash)/DashNav') , {
+  ssr:false
+})
 import { Suspense } from "react";
 
-type Props = {};
 
 export default function Page({ params }: { params: { slug: string } }) {
   const id = params.slug || "";
 
   return (
-    <main className="flex  w-full">
+    <main className="flex w-full">
       <Suspense fallback={<>Loading...</>}>
         <DashNav route="Recharge-wallet" />
         <MainRecharge id={id} />

@@ -8,7 +8,7 @@ import useGetSubscription from '@/hooks/useGetSubscription'
 type Props = {}
     
 export default function MainComp({ }: Props) {
-    const subscriptions = useGetSubscription()
+    const subscriptions = useGetSubscription() || ""
     return (
         <main className='w-full  min-h-screen dh-bg'>
             <MainNav />

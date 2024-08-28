@@ -1,6 +1,11 @@
   "use client";
-  import MainComp from "@/components/(userdash)/Agencies/MainComp";
-  import DashNav from "@/components/(userdash)/DashNav";
+  import dynamic from "next/dynamic";
+  const MainComp = dynamic(()=>import('@/components/(userdash)/Agencies/MainComp') , {
+    ssr:false
+  })
+  const DashNav = dynamic(()=>import('@/components/(userdash)/DashNav') , {
+    ssr:false
+  })
   import React, { Suspense } from "react";
 
   export default function Page() {
