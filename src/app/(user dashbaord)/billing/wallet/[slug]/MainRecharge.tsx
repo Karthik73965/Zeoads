@@ -38,7 +38,7 @@ export default function MainRecharge({ id }: { id: string }) {
             ErrorToast("Invalid ID");
           }
         } catch (error) {
-          ErrorToast("Something went wrong")
+          ErrorToast("Something went wrong");
           console.error(error);
         }
       };
@@ -121,30 +121,29 @@ export default function MainRecharge({ id }: { id: string }) {
     };
 
     // Stripe logic
-// Stripe logic
-const fetchClientSecret = useCallback(async () => {
-  try {
-    const response = await fetch("/api/checkout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: amount * 100, // amount in smallest unit (e.g., cents or paise)
-        currency: walletData?.currency || "INR",
-      }),
-    });
-    const data = await response.json();
-    return data.clientSecret;
-  } catch (error) {
-    console.error("Error fetching Stripe client secret:", error);
-  }
-}, [amount]);
+    // Stripe logic
+    const fetchClientSecret = useCallback(async () => {
+      try {
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: amount * 100, // amount in smallest unit (e.g., cents or paise)
+            currency: walletData?.currency || "INR",
+          }),
+        });
+        const data = await response.json();
+        return data.clientSecret;
+      } catch (error) {
+        console.error("Error fetching Stripe client secret:", error);
+      }
+    }, [amount]);
 
-const stripeOptions = {
-  clientSecret: fetchClientSecret(),
-};
-
+    const stripeOptions = {
+      clientSecret: fetchClientSecret(),
+    };
 
     const processStripePayment = () => {
       // Opens the Stripe Embedded Checkout
@@ -300,7 +299,7 @@ const stripeOptions = {
           )}
         </div>
       </div>
-    );  
+    );
   };
 
   return (

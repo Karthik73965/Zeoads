@@ -25,7 +25,7 @@ export default function MainSettings({}: Props) {
   const [previewImage, setPreviewImage] = useState<string | null>(
     userinfo?.image || ""
   );
-  
+
   const data = useUserInfo();
 
   const notify = () =>
@@ -132,7 +132,7 @@ export default function MainSettings({}: Props) {
           </section>
           {/* profile info */}
           <div className="mt-5 border-b-[1px] pb-2 mx-5 border-[#E4E7EC]">
-            <div className="flex gap-x-10 justify-between">
+            <div className="flex flex-col md:flex-row gap-2 gap-x-10 justify-between">
               <div className="my-10">
                 <div className="text-[#1F2933] font-medium">
                   Profile picture
@@ -221,7 +221,7 @@ export default function MainSettings({}: Props) {
             )}
           </div>
           {/* Panel info */}
-          <section className="border-b-[1px] mx-5 flex justify-between border-[#E4E7EC] h-[180px]">
+          <section className="border-b-[1px] mt-4 mx-5 flex flex-col md:flex-row gap-2 justify-between border-[#E4E7EC] h-[180px]">
             <div className="my-auto">
               <div className="text-[#1F2933] font-medium">Panel Settings</div>
               <div className="text-[#3E4C59] text-[14px]">
@@ -252,8 +252,8 @@ export default function MainSettings({}: Props) {
             </div>
           </section>
           {/* KYC status */}
-          <section className="border-b-[1px] py-10 mx-5 flex justify-between border-[#E4E7EC]">
-            <div className="my-auto">
+          <section className="border-b-[1px] py-10 mt-16 mx-5 flex justify-between border-[#E4E7EC]">
+            <div className="">
               <div className="primary-text font-semibold">KYC Status</div>
             </div>
             <div>
@@ -265,8 +265,8 @@ export default function MainSettings({}: Props) {
             </div>
           </section>
           {/* CTA */}
-          <section className="border-[1px] mx-5 pl-3 py-[24px] flex justify-between border-[#E4E7EC]">
-            <div className="flex h-[80px] gap-[24px]">
+          <section className="border-[1px]  flex justify-between border-[#E4E7EC]">
+            <div className="flex flex-col md:flex-row h-auto p-8 gap-[24px]">
               <img
                 className="rounded-full w-[56px] h-[56px]"
                 src="/utils/walletblue.svg"
@@ -281,8 +281,8 @@ export default function MainSettings({}: Props) {
                   plans.
                 </p>
               </div>
-              <div className="flex gap-[48px]">
-                <button className="w- primary-text h-[48px] rounded-[4px] py-[12px] px-[32px] border-[1px] border-[#4779E8] text-center">
+              <div className="flex flex-col md:flex-row gap-[48px] whitespace-nowrap ">
+                <button className="w-full primary-text h-[48px] rounded-[4px] py-[12px] px-[32px] border-[1px] border-[#4779E8] text-center">
                   Contact Us
                 </button>
                 <button className="text-white h-[48px] rounded-[4px] py-[12px] px-[32px] border-[1px] bg-[#4779E8] text-center">

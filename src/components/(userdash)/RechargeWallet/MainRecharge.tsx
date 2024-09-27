@@ -32,7 +32,7 @@ export default function MainRecharge({}: Props) {
   return (
     <main className="w-full min-h-screen dh-bg">
       <MainNav />
-      <section className="mx-5 mt-10 flex justify-between">
+      <section className="mx-5 mt-10 flex flex-col md:flex-row gap-4">
         <div className="flex bg-white border-[1px] gap-[16px] h-[56px] w-[364px] rounded-[8px] px-3">
           <img
             className="w-[22px] my-auto h-[22px]"
@@ -47,7 +47,7 @@ export default function MainRecharge({}: Props) {
         </div>
         <CreateCreditAccount />
       </section>
-      <section className="m-5 grid grid-cols-3 gap-5">
+      <section className="m-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
         {wallets &&
           wallets.map((i: CreditAccount, index: number) => (
             <CreditCard

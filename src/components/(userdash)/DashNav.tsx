@@ -53,18 +53,24 @@ export default function DashNav({ route }: Props) {
   // toast function
 
   return (
-    <div className="w-[252px]   min-h-screen bg-white  border-r-[1px]  border-[#E4E7EC]">
-      <div className="h-[84px] mx-2  p-5 border-b-[1px] border-[#E4E7EC] ">
-        <img className="h-[32px] w-[144px]" src="/logo.svg" alt="" />
+    <div className="w-fit min-w-12 md:w-[282px] min-h-screen border-r-[1px]  border-[#E4E7EC]">
+      <div className="h-20 md:h-[84px] md:mx-2 p-5 border-b-[1px] border-[#E4E7EC] ">
+        <img
+          className="h-20 w-20 md:h-[32px] md:w-[144px]"
+          src="/logo.svg"
+          alt=""
+        />
       </div>
-      <section className="px-5">
-        <div className="text-[14px] mx-2 mt-2 text-[#727F8F]">Overview</div>
-        <section className="gap-[20px] grid mt-5">
+      <section className="md:px-5">
+        <div className="text-[14px] md:mx-2 mt-2 text-[#727F8F] hidden md:flex">
+          Overview
+        </div>
+        <section className="flex flex-col items-center gap-[20px] md:grid mt-5">
           <div
             onClick={() => router.push("/dashboard")}
-            className={`w-[220px] h-[40px]  cursor-pointer  flex ${
+            className={`w-fit md:w-[220px] md:h-[40px] cursor-pointer ${
               route == "dashboard" ? " bg-[#4779E8]" : ""
-            }  gap-[12px] p-[8px] rounded-[4px]`}
+            }  flex  gap-[12px] p-[8px] rounded-[4px]`}
           >
             <img
               src={`${
@@ -73,9 +79,9 @@ export default function DashNav({ route }: Props) {
                   : "/userDash/Nav/Dash.png"
               }`}
               alt="dash"
-            />{" "}
+            />
             <div
-              className={`${
+              className={`hidden md:flex ${
                 route == "dashboard" ? "text-white" : "text-[#3E4C59]"
               }`}
             >
@@ -84,7 +90,7 @@ export default function DashNav({ route }: Props) {
           </div>
           <div
             onClick={() => router.push("/account")}
-            className={`w-[220px] h-[40px] cursor-pointer ${
+            className={`w-fit md:w-[220px] md:h-[40px] cursor-pointer ${
               route == "account" ? " bg-[#4779E8]" : ""
             }  flex  gap-[12px] p-[8px] rounded-[4px]`}
           >
@@ -97,7 +103,7 @@ export default function DashNav({ route }: Props) {
               alt="dash"
             />
             <div
-              className={`${
+              className={`hidden md:flex ${
                 route == "account" ? "text-white" : "text-[#3E4C59]"
               }`}
             >
@@ -106,12 +112,12 @@ export default function DashNav({ route }: Props) {
           </div>
           <div
             onClick={() => router.push("/courses")}
-            className={`w-[220px] h-[40px] cursor-pointer ${
+            className={`w-fit md:w-[220px] md:h-[40px] cursor-pointer ${
               route == "courses" ? " bg-[#4779E8]" : ""
             }  flex  gap-[12px] p-[8px] rounded-[4px]`}
           >
             <img
-              src={`${
+              src={` ${
                 route == "couses"
                   ? "/userDash/Nav/coursesWhite.svg"
                   : "/userDash/Nav/Courses.svg"
@@ -119,7 +125,7 @@ export default function DashNav({ route }: Props) {
               alt="dash"
             />{" "}
             <div
-              className={`${
+              className={`hidden md:flex ${
                 route == "courses" ? "text-white" : "text-[#3E4C59]"
               }`}
             >
@@ -128,7 +134,7 @@ export default function DashNav({ route }: Props) {
           </div>
           <div
             onClick={() => router.push("/billing/Recharge-wallet")}
-            className={`w-[220px] h-[40px] cursor-pointer ${
+            className={`w-fit md:w-[220px] md:h-[40px] cursor-pointer ${
               billing ? " bg-[#4779E8]" : "bg-white"
             }  flex  gap-[12px]  p-[8px] rounded-[4px]`}
           >
@@ -140,7 +146,11 @@ export default function DashNav({ route }: Props) {
               }`}
               alt="dash"
             />{" "}
-            <div className={`${billing ? "text-white" : "text-[#3E4C59]"}`}>
+            <div
+              className={`hidden md:flex ${
+                billing ? "text-white" : "text-[#3E4C59]"
+              }`}
+            >
               <div className="flex justify-between gap-[100px] w-full">
                 {" "}
                 Billing <MdOutlineKeyboardArrowUp className="m-1 text-xl" />
@@ -151,7 +161,7 @@ export default function DashNav({ route }: Props) {
             <div className="border-l-[1px] border-[#E4E7EC] pl-5 mt-0">
               <div
                 onClick={() => router.push("/billing/Recharge-wallet")}
-                className={`${
+                className={`hidden md:flex ${
                   route == "Recharge-wallet"
                     ? "primary-text "
                     : "text-[#3E4C59] cursor-pointer"
@@ -161,7 +171,7 @@ export default function DashNav({ route }: Props) {
               </div>
               <div
                 onClick={() => router.push("/billing/Transaction-history")}
-                className={`${
+                className={`hidden md:flex ${
                   route == "Transaction-history"
                     ? "primary-text "
                     : "text-[#3E4C59] cursor-pointer"
@@ -171,7 +181,7 @@ export default function DashNav({ route }: Props) {
               </div>
               <div
                 onClick={() => router.push("/billing/Plans")}
-                className={`${
+                className={`hidden md:flex ${
                   route == "Plans" ? "primary-text " : "text-[#3E4C59]"
                 } mb-3 cursor-pointer text-[14px]`}
               >
@@ -184,7 +194,7 @@ export default function DashNav({ route }: Props) {
 
           <div
             onClick={() => router.push("/settings/Account-settings")}
-            className={`w-[220px] h-[40px] cursor-pointer ${
+            className={`w-fit md:w-[220px] md:h-[40px] cursor-pointer ${
               settings ? " bg-[#4779E8]" : ""
             }  flex  gap-[12px] p-[8px] rounded-[4px]`}
           >
@@ -196,7 +206,11 @@ export default function DashNav({ route }: Props) {
               }`}
               alt="dash"
             />{" "}
-            <div className={`${settings ? "text-white" : "text-[#3E4C59]"}`}>
+            <div
+              className={`hidden md:flex ${
+                settings ? "text-white" : "text-[#3E4C59]"
+              }`}
+            >
               Settings
             </div>
           </div>
@@ -204,7 +218,7 @@ export default function DashNav({ route }: Props) {
             <div className="border-l-[1px] border-[#E4E7EC] pl-5 mt-0">
               <div
                 onClick={() => router.push("/settings/Account-settings")}
-                className={`${
+                className={`hidden md:flex ${
                   route == "Settings"
                     ? "primary-text "
                     : "text-[#3E4C59] cursor-pointer"
@@ -214,7 +228,7 @@ export default function DashNav({ route }: Props) {
               </div>
               <div
                 onClick={() => router.push("/settings/Invoice-information")}
-                className={`${
+                className={`hidden md:flex ${
                   route == "Invoice"
                     ? "primary-text "
                     : "text-[#3E4C59] cursor-pointer"
@@ -224,7 +238,7 @@ export default function DashNav({ route }: Props) {
               </div>
               <div
                 onClick={() => router.push("/settings/User-Management")}
-                className={`${
+                className={`hidden md:flex ${
                   route == "User-Management"
                     ? "primary-text "
                     : "text-[#3E4C59]"
@@ -239,10 +253,14 @@ export default function DashNav({ route }: Props) {
         </section>
         <div
           onClick={() => logout()}
-          className="w-[220px] h-[40px] cursor-pointer  flex mt-10 gap-[12px] p-[8px] rounded-[4px]"
+          className="w-full justify-center md:w-[220px] md:h-[40px] cursor-pointer  flex mt-10 gap-[12px] p-[8px] rounded-[4px]"
         >
-          <img src="/userDash/Nav/logout.png" alt="dash" />{" "}
-          <div className="text-[#4779E8]">Logout</div>
+          <img
+            src="/userDash/Nav/logout.png"
+            className="self-center"
+            alt="dash"
+          />{" "}
+          <div className="text-[#4779E8] hidden md:flex">Logout</div>
         </div>
       </section>
     </div>

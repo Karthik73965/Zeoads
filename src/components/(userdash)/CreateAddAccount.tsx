@@ -51,10 +51,10 @@ export function CreateAddAccount() {
   const fetchWallets = useCallback(async () => {
     try {
       const data = await getAllWallets(userinfo.id);
-      const reduced = data?.map((account:any) => account.name) || [];
+      const reduced = data?.map((account: any) => account.name) || [];
       setWallets(reduced);
     } catch (error) {
-      ErrorToast("Interal server Error")
+      ErrorToast("Interal server Error");
     }
   }, [userinfo?.id]);
 
@@ -67,15 +67,15 @@ export function CreateAddAccount() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="w-[] h-[56px] py-[16px] px-[24px] flex gap-[8px] text-white rounded-[8px] bg-[#4779E8] ">
-          <img className="mt-1" src="/userDash/Agencies/plus.svg" alt="plus" />
-          <div>Create Ad Account</div>
+        <button className="h-[56px] py-[16px] px-[24px] flex gap-[8px] text-white rounded-[8px] bg-[#4779E8] ">
+          <img className="" src="/userDash/Agencies/plus.svg" alt="plus" />
+          <div className="whitespace-nowrap">Create Ad Account</div>
         </button>
       </DialogTrigger>
       <DialogContent className="min-w-max flex h-[99vh] p-6 gap-6">
         {step === 1 ? (
           <>
-            <section>
+            <section className="hidden md:flex">
               {Ad === "TIKTOK" ? (
                 <FeauturesHome
                   name="Tiktok"
@@ -160,7 +160,9 @@ export function CreateAddAccount() {
                   />
                 </div>
                 <div className="mt-5">
-                  <div className="text-[#1F2933] font-medium">Account TimeZone</div>
+                  <div className="text-[#1F2933] font-medium">
+                    Account TimeZone
+                  </div>
                   <input
                     type="text"
                     value={TimeZone}
@@ -185,7 +187,7 @@ export function CreateAddAccount() {
                     <option value="" disabled>
                       -- Choose a Wallet --
                     </option>
-                    {wallets.map((wallet:any, index:number) => (
+                    {wallets.map((wallet: any, index: number) => (
                       <option key={index} value={wallet}>
                         {wallet}
                       </option>
@@ -237,11 +239,15 @@ export function CreateAddAccount() {
                 <div className="text-[#3E4C59]">{email}</div>
               </div>
               <div className="mt-5">
-                <div className="text-[#1F2933] font-medium">Ad Account Type:</div>
+                <div className="text-[#1F2933] font-medium">
+                  Ad Account Type:
+                </div>
                 <div className="text-[#3E4C59]">{Ad}</div>
               </div>
               <div className="mt-5">
-                <div className="text-[#1F2933] font-medium">Account TimeZone:</div>
+                <div className="text-[#1F2933] font-medium">
+                  Account TimeZone:
+                </div>
                 <div className="text-[#3E4C59]">{TimeZone}</div>
               </div>
               <div className="mt-5">
@@ -249,7 +255,9 @@ export function CreateAddAccount() {
                 <div className="text-[#3E4C59]">{selectedWallet}</div>
               </div>
               <div className="mt-5">
-                <div className="text-[#1F2933] font-medium">Link {"(optional)"}</div>
+                <div className="text-[#1F2933] font-medium">
+                  Link {"(optional)"}
+                </div>
                 <div className="text-[#3E4C59]">{Link}</div>
               </div>
               <div className="gap-[24px] flex mx-6 mt-3 font-semibold">

@@ -61,7 +61,7 @@ export default function MonthlyBarChart({ things }: { things: any }) {
   return (
     <>
       {
-        <div className="p-[24px] m-4 gap-[16px] border-[1px] w-[652px] rounded-md bg-white">
+        <div className="p-[24px] m-4 gap-[16px] border-[1px] md:w-[364px] rounded-md">
           <div className="flex justify-between">
             <div className="flex">
               <div className="ml-5">
@@ -70,17 +70,17 @@ export default function MonthlyBarChart({ things }: { things: any }) {
                 </div>
                 <p className="-mt-2">Daily spend breakdown</p>
                 <div className="w-full -ml-10 h-[300px] mt-10">
-                  <ResponsiveContainer width={600} height="100%">
-                    <BarChart width={500} height={300} data={data}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="day" /> {/* Display day on the X-axis */}
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="spent" fill="#4779E8" />{" "}
-                      {/* Display collected funds as bars */}
-                    </BarChart>
-                  </ResponsiveContainer>
+                  {/* <ResponsiveContainer height="100%"> */}
+                  <BarChart width={300} height={300} data={data}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="day" /> {/* Display day on the X-axis */}
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="spent" fill="#4779E8" />{" "}
+                    {/* Display collected funds as bars */}
+                  </BarChart>
+                  {/* </ResponsiveContainer> */}
                 </div>
               </div>
             </div>
