@@ -70,17 +70,17 @@ export default function MonthlyBarChart({ things }: { things: any }) {
                 </div>
                 <p className="-mt-2">Key Performance Indicators</p>
                 <div className="w-full  h-[300px] mt-10">
-                  <ResponsiveContainer width={900} height="100%">
-                    <BarChart width={500} height={300} data={data}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="day" /> {/* Display day on the X-axis */}
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="spent" fill="#4779E8" />{" "}
-                      {/* Display collected funds as bars */}
-                    </BarChart>
-                  </ResponsiveContainer>
+                  {/* <ResponsiveContainer width={900} height="100%"> */}
+                  <BarChart width={500} height={300} data={data}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="day" /> {/* Display day on the X-axis */}
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="spent" fill="#4779E8" />{" "}
+                    {/* Display collected funds as bars */}
+                  </BarChart>
+                  {/* </ResponsiveContainer> */}
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@ export default function MonthlyBarChart({ things }: { things: any }) {
 // Usage of the component with dummy data
 export function KPICHART() {
   return (
-    <div className="">
+    <div className="hidden md:flex">
       <MonthlyBarChart things={dummyThings} />
     </div>
   );

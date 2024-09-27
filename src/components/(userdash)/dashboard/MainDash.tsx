@@ -12,13 +12,13 @@ type Props = {};
 
 export default function MainDash({}: Props) {
   const [complete, SetComplete] = useState<boolean>(false);
-   const router = useRouter()
+  const router = useRouter();
   return (
-    <main className="w-[100vw-252px]  dh-bg">
+    <main className="w-fit md:w-[100vw-252px]">
       <MainNav />
       {/* Video  */}
-      <section className="m-4 bg-white rounded-[8px] p-[24px] h-[368px] flex gap-[24px] border-[1px] border-[#E4E7EC] ">
-        <div className="mt-10">
+      <section className="m-4 w-fit rounded-[8px] p-[24px] md:h-[368px] flex flex-col-reverse md:flex-row md:gap-[24px] border-[1px] border-[#E4E7EC] ">
+        <div className="mt-4 md:mt-10">
           <div className="text-[#727F8F]">Here&apos;s Quick Tutorial!</div>
           <h3 className="font-medium mt-5 text-[24px] text-[#1F2933]">
             Watch our video guide - learn how to start your Zeoads account
@@ -35,7 +35,7 @@ export default function MainDash({}: Props) {
           </div>
         </div>
         <img
-          className="w-[534px] h-[320px]  rounded-[8px]"
+          className="md:w-[534px] md:h-[320px]  rounded-[8px]"
           src="/userDash/video.svg"
           alt="video"
         />
@@ -44,7 +44,7 @@ export default function MainDash({}: Props) {
       {complete ? (
         <>
           <DashFilter />
-          <section className="m-4  flex justify-between flex-wrap  gap-x-2">
+          <section className="m-4  flex flex-col md:flex-row justify-between flex-wrap  gap-x-2">
             <DashCard
               Main="0"
               heading="Total Spend ( USD ) "
@@ -78,13 +78,13 @@ export default function MainDash({}: Props) {
               trueStr="Cpi"
             />
           </section>
-          <section className="flex justify-between ">
+          <section className="flex flex-col md:flex-row justify-start">
             <DailySpentChart />
             <PromoPie AllUsers={300} newUsers={400} />
           </section>
           {/* 2nd section */}
-          <section className="h-[386px] flex justify-between ">
-            <div className="p-[24px] m-4 gap-[16px] border-[1px] w-[652px] rounded-md bg-white">
+          <section className="md:h-[386px] flex flex-col md:flex-row justify-between ">
+            <div className="p-[24px] m-4 gap-[16px] border-[1px] w-fit md:w-[652px] rounded-md bg-white">
               <div className="text-[#3E4C59] font-semibold text-[20px] mb-3">
                 Spend by Country{" "}
               </div>
@@ -102,7 +102,7 @@ export default function MainDash({}: Props) {
                 </center>
               </div>
             </div>
-            <div className="h-[356px] w-[364px] p-6 mt-5 bg-white border-[1px] rounded-[8px] items-center">
+            <div className="md:h-[356px] md:w-[364px] w-[320px] p-6 mt-5 bg-white border-[1px] rounded-[8px] items-center">
               <div className="flex gap-[16px] h-[80px] mb-5">
                 <img
                   className="h-[48px] w-[48px] mt-5"
@@ -151,27 +151,27 @@ export default function MainDash({}: Props) {
             </div>
           </section>
           {/* 3rd section */}
-            <div className="p-[24px] h-[400px] m-4 gap-[16px] border-[1px] w-[full   rounded-md bg-white">
-              <div className="text-[#3E4C59] font-semibold text-[20px] mb-3">
-                Ad Account Performance
-              </div>
-              <p className="-mt-2">
-                Detailed performance metrics for each ad account
-              </p>
-              <div className="mt-10 rounded-[8px] bg-white">
-                <center className="mt-[70px]">
-                  <img
-                    className="w-[32px] h-[32px]"
-                    src="/utils/globe.svg"
-                    alt="globe"
-                  />
-                  <div className="text-[#727F8F]">
-                    No content found for ad account performance.{" "}
-                  </div>
-                </center>
-              </div>
+          <div className="p-[24px] h-[400px] m-4 gap-[16px] border-[1px] w-[320px]  rounded-md bg-white">
+            <div className="text-[#3E4C59] font-semibold text-[20px] mb-3">
+              Ad Account Performance
             </div>
-            <KPICHART/>
+            <p className="-mt-2">
+              Detailed performance <br /> metrics for each ad account
+            </p>
+            <div className="mt-10 rounded-[8px] bg-white">
+              <center className="mt-[70px]">
+                <img
+                  className="w-[32px] h-[32px]"
+                  src="/utils/globe.svg"
+                  alt="globe"
+                />
+                <div className="text-[#727F8F]">
+                  No content found for ad account performance.{" "}
+                </div>
+              </center>
+            </div>
+          </div>
+          <KPICHART />
         </>
       ) : (
         <div></div>

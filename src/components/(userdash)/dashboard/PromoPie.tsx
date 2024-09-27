@@ -16,8 +16,8 @@ export default function PromoPie({
     { name: "Page A", pv: Number(AllUsers) },
   ];
   return (
-    <div className="p-[24px] gap-[16px] border-[1px] w-[364px]  grid  items-center rounded-md bg-white">
-      <div className="flex justify-between">    
+    <div className="p-[12px] gap-[16px] border-[1px] w-[320px] md:w-[364px]  grid  items-center rounded-md bg-white">
+      <div className="flex justify-between">
         <div className="flex">
           <div className="ml-5">
             <div className="font-bold text-[20px] mb-3">Total Users</div>
@@ -47,10 +47,14 @@ export default function PromoPie({
           </div>
         </div>
       </div>
-        <div className="text-[#3E4C59] flex  gap-x-5   -mt-5 ml-3"> 
-          <div className="text-white rounded-md font-medium  p-3 flex gap-x-5 bg-black">New Users : {JSON.stringify(newUsers)}</div>
-          <div className="text-white rounded-md font-medium  p-3 flex gap-x-5 bg-[#4779E8]">All Users : {JSON.stringify(AllUsers)}</div>
+      <div className="text-[#3E4C59] flex  gap-x-5   -mt-5 ml-3">
+        <div className="text-white rounded-md font-medium  p-3 flex gap-x-5 bg-black">
+          New Users : {JSON.stringify(newUsers)}
         </div>
+        <div className="text-white rounded-md font-medium  p-3 flex gap-x-5 bg-[#4779E8]">
+          All Users : {JSON.stringify(AllUsers)}
+        </div>
+      </div>
     </div>
   );
 }
