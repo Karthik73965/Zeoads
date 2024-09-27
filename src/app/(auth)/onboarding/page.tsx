@@ -144,9 +144,9 @@ export default function Page({ }: Props) {
     }
 
     return (
-        <div>
+        <center className=' h-screen  dh-bg  p-4  my-4 mx-20'>
             {state === 0 && <MainOnboarding />}
             {state === 1 && <DetailsComponent />}
-        </div>
+        </center>
     )
 }

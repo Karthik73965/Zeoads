@@ -1,5 +1,5 @@
 import DashNav from '@/components/(userdash)/DashNav'
-import MainDash from '@/components/(userdash)/MainDash'
+import MainDash from '@/components/(userdash)/dashboard/MainDash'
 import React from 'react'
 
 type Props = {}

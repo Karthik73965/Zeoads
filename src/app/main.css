@@ -25,7 +25,6 @@ body {
 .demo-bg {
   opacity: 0.5;
   position: absolute;
-  width: calc(100vw - 160px);
   background-position: center;
   object-fit: cover;
   height: 304px;
@@ -42,7 +41,6 @@ body {
 .stats-bg {
   opacity: 0.4;
   position: absolute;
-  width: calc(100vw - 160px);
   background-position: center;
   object-fit: cover;
   height: 462px;

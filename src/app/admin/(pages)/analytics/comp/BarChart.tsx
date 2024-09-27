@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -9,85 +9,71 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Rectangle,
 } from "recharts";
 
-export default function MontlyBarChart() {
+// Component to render the Bar Chart
+export default function MonthlyBarChart({ things }: { things: any }) {
+  const [data, setData] = useState([]);
+
+  // Transform the data function with added safety checks
+  const transformData = (response: any) => {
+    if (!response || !Array.isArray(response.dailyMontlyPerformance)) {
+      return [];
+    }
+
+    return Object.values(
+      response.dailyMontlyPerformance.reduce((acc: any, entry: any) => {
+        const day = new Date(entry.createdAt).getDate(); // Get the day of the month from createdAt
+
+        // Initialize day in accumulator if it doesn't exist
+        if (!acc[day]) {
+          acc[day] = { day: `Day ${day}`, collectedFunds: 0 };
+        }
+
+        // Add amount to the respective day's collectedFunds
+        acc[day].collectedFunds += entry.amount;
+
+        return acc;
+      }, {})
+    );
+  };
+
+  // UseEffect to update data when things prop changes
+  useEffect(() => {
+    if (things) {
+      const transformed:any = transformData(things);
+      setData(transformed);
+    }
+  }, [things]); // Depend on things prop so that it re-runs when things updates
+
   return (
-    <div className="p-[24px] gap-[16px] border-[1px] rounded-md bg-white">
-      <div className="flex justify-between">
-        <div className="flex">
-          <div className="ml-5">
-            <div className="text-[#3E4C59] font-semibold text-[20px] mb-3">Overall Montly performance</div>
-            <div className="w-full h-[300px] mt-10">
-              <ResponsiveContainer width={600} height="100%">
-                <BarChart
-                  width={500}
-                  height={300}
-                  data={data}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar
-                    dataKey="pv"
-                    fill="#4779E8"
-                  
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+    <>
+      {
+        <div className="p-[24px] gap-[16px] border-[1px] rounded-md bg-white">
+          <div className="flex justify-between">
+            <div className="flex">
+              <div className="ml-5">
+                <div className="text-[#3E4C59] font-semibold text-[20px] mb-3">
+                  Overall Monthly Performance
+                </div>
+                <div className="w-full h-[300px] mt-10">
+                  <ResponsiveContainer width={600} height="100%">
+                    <BarChart width={500} height={300} data={data}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="day" /> {/* Display day on the X-axis */}
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Bar dataKey="collectedFunds" fill="#4779E8" />{" "}
+                      {/* Display collected funds as bars */}
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="text-[#3E4C59] mt-5 ml-3"></div>
-    </div>
+      }
+    </>
   );
 }
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
-

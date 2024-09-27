@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { ToastContainer, Bounce } from "react-toastify";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
-import './main.css'
+import "./main.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,7 +18,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
+        {children}
+      </body>
     </html>
   );
 }

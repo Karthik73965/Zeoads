@@ -1,6 +1,7 @@
 "use client";
 import { getOrderInfo, SubmitOrder } from "@/actions/admin/OrderActions";
 import AdminMainNav from "@/app/admin/components/AdminMainNav";
+import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";
 import React, { useEffect, useState } from "react";
 
 type Props = {};
@@ -32,13 +33,16 @@ export default function MainOrderSlug({ id }: { id: string }) {
     try {
       if (link) {
         const response = await SubmitOrder(id, link);
-        console.log(response);
-        alert(response);
+        if (response) {
+          SucessToast("Link added SucessFully");
+        } else {
+          ErrorToast("something wenr Wrong ");
+        }
       } else {
-        alert("nill");
+        ErrorToast("nill");
       }
     } catch (error) {
-      alert("error");
+      ErrorToast("error");
       console.log(error);
     }
   };

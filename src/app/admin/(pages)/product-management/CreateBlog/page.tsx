@@ -1,7 +1,7 @@
 'use client'
 import AdminMainNav from '@/app/admin/components/AdminMainNav'
 import AdminNav from '@/app/admin/components/AdminNav'
-import { Createblog } from '@/app/admin/components/CreateBlog'
+import { CreateBlog } from '@/app/admin/components/CreateBlog'
 import React from 'react'
 
 type Props = {}
@@ -14,7 +14,7 @@ export default function Page({}: Props) {
       <section className='w-full dh-bg'>
         <AdminMainNav/>
 
-        <Createblog/>
+        <CreateBlog/>
       </section>
     </main>
   )

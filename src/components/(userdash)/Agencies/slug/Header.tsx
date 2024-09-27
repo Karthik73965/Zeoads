@@ -4,6 +4,7 @@ import { AddBalance } from "@/app/(user dashbaord)/account/[slug]/AddBalance";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import React, { useCallback, useEffect, useState } from "react";
 import { CreditAccount } from "@prisma/client";
+import { ErrorToast } from "@/utils/ToastFucntion";
 
 type Props = {
   id: string;
@@ -13,8 +14,10 @@ type Props = {
   userId: string | undefined;
 };
 
-export default function Header({ status, creditAccount }: Props) {
-  const [walletDetials, setWalletDetails] = useState<CreditAccount | null>(null);
+export default function Header({ id, status, creditAccount }: Props) {
+  const [walletDetials, setWalletDetails] = useState<CreditAccount | null>(
+    null
+  );
   const userinfo = useUserInfo();
 
   const fetchCreditDetails = useCallback(async () => {
@@ -27,7 +30,7 @@ export default function Header({ status, creditAccount }: Props) {
         setWalletDetails(data);
       }
     } catch (error) {
-      alert("error");
+      ErrorToast("Internal server error")
       console.error(error);
     }
   }, [creditAccount, userinfo?.id]);
@@ -79,6 +82,7 @@ export default function Header({ status, creditAccount }: Props) {
         </div>
         <div className="-mt-2">
           <AddBalance
+            Acc_id={id}
             id={walletDetials?.id || ""}
             balance={walletDetials?.balance || 0}
             currency={walletDetials?.currency}

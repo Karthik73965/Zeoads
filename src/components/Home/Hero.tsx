@@ -7,10 +7,10 @@ type Props = {}
 
 export default function Hero({ }: Props) {
     return (
-        <main className='px-20 pt-[72px] mt-10 flex flex-1  justify-between'>
+        <main className='md:px-20 px-10 md:pt-[112px] pt-[102px] mt-10 md:flex flex-1  justify-between'>
             <section>
                 <div className='flex gap-x-3 text-[20px] Neutral5'>Hey there, we&apos;re <span className='primary-text'> Zeoads</span> <img src='/home/handshake.svg' alt='handshake' /></div>
-                <h1 className='text-[56px] mt-5 font-bold w-[45vw]  leading-[70px]'>
+                <h1 className='md:text-[56px] text-[32px] mt-5 font-bold md:w-[45vw] w-[84vw] leading-[44px]  md:leading-[70px]'>
                     <TypeAnimation
                         sequence={[
                             "TIRED OF DISABLED AD ACCOUNTS?",
@@ -29,9 +29,9 @@ export default function Hero({ }: Props) {
                         repeat={Infinity}
                     />
                 </h1>
-
-                <p className='Neutral4 text-xl mt-5 leading-[34px]'>Zeoadzs works directly with all Ad platforms and provides a <br />seamless Ad publishing service.</p>
-                <div className='mt-10 flex gap-x-[24px]'>
+                <p className='Neutral4 hidden md:block md:text-xl mt-5 leading-[34px]'>Zeoads works directly with all Ad platforms and provides a <br />seamless Ad publishing service.</p>
+                <p className='Neutral4 block md:hidden  my-5 '>Zeoads works directly with all Ad platforms and provides a seamless Ad publishing service.</p>
+                <div className='mt-10  gap-x-[24px] hidden md:flex'>
                     <button className='bg-[#4779E8] w-[204px] h-[48px] rounded-[4px] text-white '>
                         Get started Today
                     </button>
@@ -40,18 +40,18 @@ export default function Hero({ }: Props) {
                     </button>
                 </div>
             </section>
-            <section className='w-[50%] h-full flex '>
+            <section className='md:w-[50%] h-full flex '>
                 <div className='grid gap-y-80 absolute'>
-                    <img src='/Home/avatar/2.svg' alt='avatar 1' />
-                    <img src='/Home/avatar/1.svg' alt='avatar 2' />
+                    <img className='w-[22.31px] md:w-auto md:h-auto h-[22.31px]' src='/Home/avatar/2.svg' alt='avatar 1' />
+                    <img className='w-[22.31px] -mt-20 md:-mt-0 md:w-auto md:h-auto h-[22.31px]' src='/Home/avatar/1.svg' alt='avatar 2' />
                 </div>
                 <div>
-                    <img src="/Home/chart.svg" className='z-10 ml-20 relative' alt="" />
-                    <div className='gradient w-[588px] h-[280px] -z-20 -mt-[300px] absolute'> &nbsp;</div>
+                    <img src="/Home/chart.svg" className='z-10 md:ml-20 ml-10  relative' alt="" />
+                    <div className='gradient md:w-[558px] w-full h-[280px] -z-20 -mt-[300px] -ml-10 absolute'> &nbsp;</div>
                 </div>
-                <div className='grid gap-y-80  ml-10'>
-                    <img src='/Home/avatar/3.svg' alt='avatar 3' />
-                    <img src='/Home/avatar/4.svg' alt='avatar 4' />
+                <div className='grid gap-y-80 ml-10'>
+                    <img className='w-[30.31px] md:w-auto md:h-auto h-[30.31px]' src='/Home/avatar/3.svg' alt='avatar 3' />
+                    <img className='w-[30.31px] -mt-20 md:-mt-0  md:w-auto md:h-auto h-[30.31px]' src='/Home/avatar/4.svg' alt='avatar 4' />
                 </div>
             </section>
         </main>

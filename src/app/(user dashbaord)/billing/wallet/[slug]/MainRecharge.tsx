@@ -1,4 +1,6 @@
 "use client";
+import { AnalyticsFunc } from "@/actions/admin/AnalyticsActions";
+import Script from "next/script";
 import {
   addBalanceTowallet,
   getWalletInfo,
@@ -6,11 +8,23 @@ import {
 import MainNav from "@/components/(userdash)/MainNav";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import { CreditAccount } from "@prisma/client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  EmbeddedCheckoutProvider,
+  EmbeddedCheckout,
+} from "@stripe/react-stripe-js";
+import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";
+
+// Stripe integration
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+);
 
 export default function MainRecharge({ id }: { id: string }) {
   const [walletData, setWalletData] = useState<CreditAccount | null>(null);
   const userInfo = useUserInfo() || { id: "" }; // Default value to prevent null errors
+  const [paymentMethod, setPaymentMethod] = useState<string>("");
 
   useEffect(() => {
     if (id) {
@@ -21,9 +35,10 @@ export default function MainRecharge({ id }: { id: string }) {
             setWalletData(data);
             console.log(data);
           } else {
-            alert("Invalid ID");
+            ErrorToast("Invalid ID");
           }
         } catch (error) {
+          ErrorToast("Something went wrong")
           console.error(error);
         }
       };
@@ -35,34 +50,137 @@ export default function MainRecharge({ id }: { id: string }) {
   const PaymentComponent: React.FC = () => {
     const [step, setStep] = useState(1);
     const [amount, setAmount] = useState<number>(0);
-    const [paymentMethod, setPaymentMethod] = useState("");
 
-    const handleContinue = async () => {
-      if (step === 1 && amount) {
-        setStep(2);
-      } else if (step === 2 && paymentMethod) {
-        // Proceed to payment handling
-        if (!userInfo.id) {
-          alert("User information is missing");
-          return;
+    // Razorpay logic
+    const createOrderId = async () => {
+      try {
+        const response = await fetch("/api/order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: amount * 100, // amount in paisa for Razorpay
+            currency: walletData?.currency || "INR",
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to create order");
         }
 
-        const handleSubmit = await addBalanceTowallet(
-          id,
-          userInfo.id, // Ensuring userInfo.id is not null or undefined
-          amount,
-          paymentMethod
-        );
-        console.log(handleSubmit);
-        alert(JSON.stringify(handleSubmit));
+        const data = await response.json();
+        return data.orderId;
+      } catch (error) {
+        console.error("Error creating order:", error);
+      }
+    };
+
+    const processRazorpayPayment = async () => {
+      try {
+        const orderId = await createOrderId();
+
+        const options = {
+          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
+          amount: amount,
+          currency: walletData?.currency || "INR",
+          name: userInfo?.name || "User",
+          description: "Add funds to wallet",
+          order_id: orderId,
+          handler: async function (response: any) {
+            const paymentResponse = await addBalanceTowallet(
+              id,
+              userInfo.id,
+              amount,
+              "Razorpay"
+            );
+            if (paymentResponse) {
+              try {
+                const analyticsRes = await AnalyticsFunc(null, amount, false);
+                console.log("Transaction recorded successfully.", analyticsRes);
+              } catch (error) {
+                console.log("Error logging analytics:", error);
+              }
+              SucessToast("Payment Successful!");
+            }
+          },
+          prefill: {
+            name: userInfo?.name || "",
+            email: userInfo?.email || "",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        const rzp = new (window as any).Razorpay(options);
+        rzp.open();
+      } catch (error) {
+        console.error("Error processing Razorpay payment:", error);
+      }
+    };
+
+    // Stripe logic
+// Stripe logic
+const fetchClientSecret = useCallback(async () => {
+  try {
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: amount * 100, // amount in smallest unit (e.g., cents or paise)
+        currency: walletData?.currency || "INR",
+      }),
+    });
+    const data = await response.json();
+    return data.clientSecret;
+  } catch (error) {
+    console.error("Error fetching Stripe client secret:", error);
+  }
+}, [amount]);
+
+const stripeOptions = {
+  clientSecret: fetchClientSecret(),
+};
+
+
+    const processStripePayment = () => {
+      // Opens the Stripe Embedded Checkout
+      const stripeOptions = { fetchClientSecret };
+      return (
+        <EmbeddedCheckoutProvider
+          stripe={stripePromise}
+          options={stripeOptions}
+        >
+          <EmbeddedCheckout />
+        </EmbeddedCheckoutProvider>
+      );
+    };
+
+    const handleContinue = async () => {
+      if (step === 1 && amount > 0) {
+        setStep(2);
+      } else if (step === 2) {
+        if (paymentMethod === "Razorpay") {
+          await processRazorpayPayment();
+        } else if (paymentMethod === "Stripe") {
+          processStripePayment();
+        }
       }
     };
 
     return (
       <div className="flex bg-white h-[75vh] p-6 rounded-lg shadow-lg">
+        <Script
+          id="razorpay-checkout-js"
+          src="https://checkout.razorpay.com/v1/checkout.js"
+        />
         {/* Left side: Stepper */}
         <div className="w-1/4 p-4 bg-[#E4E7EC] rounded-md">
-          <div className="flex flex-col ">
+          <div className="flex flex-col">
+            {/* Amount Step */}
             <div className="flex items-center space-x-4">
               <div
                 className={`w-5 h-5 -mt-2 -mb-2 rounded-full ${
@@ -81,6 +199,7 @@ export default function MainRecharge({ id }: { id: string }) {
               </span>
             </div>
             <div className="h-20 -my-3 w-1 bg-gray-300 ml-2" />
+            {/* Payment Method Step */}
             <div className="flex items-center space-x-4">
               <div
                 className={`w-7 -mt-2 h-5 rounded-full ${
@@ -99,13 +218,6 @@ export default function MainRecharge({ id }: { id: string }) {
               </span>
             </div>
             <div className="h-20 -my-5 w-1 bg-gray-300 ml-2" />
-            <div className="flex items-center space-x-4">
-              <div className="w-5 h-5 rounded-full bg-gray-300" />
-              <span className="text-black font-semibold">
-                Payment
-                <p className="text-[#3E4C59] text-[14px]">Payment details</p>
-              </span>
-            </div>
           </div>
         </div>
 
@@ -144,6 +256,7 @@ export default function MainRecharge({ id }: { id: string }) {
               </button>
             </div>
           )}
+
           {step === 2 && (
             <div>
               <h2 className="text-2xl font-semibold mb-4">
@@ -176,19 +289,6 @@ export default function MainRecharge({ id }: { id: string }) {
                   />
                   Stripe
                 </button>
-                <button
-                  className={`flex items-center p-3 border rounded ${
-                    paymentMethod === "Cryptomus" ? "bg-blue-100" : ""
-                  }`}
-                  onClick={() => setPaymentMethod("Cryptomus")}
-                >
-                  <img
-                    src="/cryptomus-logo.svg"
-                    alt="Cryptomus"
-                    className="w-6 h-6 mr-2"
-                  />
-                  Cryptomus
-                </button>
               </div>
               <button
                 className="w-full p-3 bg-blue-500 text-white rounded"
@@ -200,15 +300,13 @@ export default function MainRecharge({ id }: { id: string }) {
           )}
         </div>
       </div>
-    );
+    );  
   };
 
   return (
     <main className="w-full">
       <MainNav />
-      <section className="mx-5 rounded-md my-10 bg-white ">
-        <PaymentComponent />
-      </section>
+      <PaymentComponent />
     </main>
   );
 }

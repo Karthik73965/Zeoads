@@ -1,32 +1,92 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getIdAcessToken } from '@/utils/jwt';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation'
-
+import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export async function middleware(req: NextRequest) {
   const access_token = cookies().get("access_token")?.value;
-  const role_token = cookies().get("role_token")?.value
+  const role_token = cookies().get("role_token")?.value;
+  const admin_token = cookies().get("admin_token");
 
+  const { pathname } = req.nextUrl;
 
+  // Define user and admin route matchers
+  const userRoutes = [
+    "/dashboard",
+    "/account",
+    "/account/:slug*",
+    "/courses",
+    "/billing/Recharge-wallet",
+    "/billing/Transaction-history",
+    "/billing/Plans",
+    "/settings/Account-settings",
+    "/settings/Invoice-information",
+    "/settings/User-Management",
+  ];
 
-  if (access_token) {
-    if(role_token){
-      return NextResponse.redirect(new URL("/onboarding", req.url), {
+  const adminRoutes = [
+    "/admin/user-management",
+    "/admin/user/:slug*",
+    "/admin/manage-orders",
+    "/admin/product-management",
+    "/admin/product-management/CreateBlog",
+    "/admin/fund-management",
+    "/admin/analytics",
+    "/admin/manage-notifications",
+    "/admin/settings",
+  ];
+
+  // Check if the current path matches any user routes
+  const isUserRoute = userRoutes.some((route) => pathname.startsWith(route));
+  // Check if the current path matches any admin routes
+  const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
+
+  // Logic for user routes
+  if (isUserRoute) {
+    if (!access_token) {
+      return NextResponse.redirect(new URL("/signup", req.nextUrl), {
         status: 303,
       });
     }
-    const id = await getIdAcessToken(access_token);
-    if (id) {
-      console.log(id)
-      return NextResponse.redirect(new URL("/dashboard", req.url), {
+    if (role_token) {
+      return NextResponse.redirect(new URL("/onboarding", req.nextUrl), {
         status: 303,
       });
     }
   }
-  return NextResponse.next()
+
+  // Logic for admin routes
+  if (isAdminRoute) {
+    if (!admin_token) {
+      return NextResponse.redirect(new URL("/admin/login", req.nextUrl), {
+        status: 303,
+      });
+    }
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/signup" ],
+  matcher: [
+    // user routes
+    "/dashboard",
+    "/account",
+    "/account/:slug*",
+    "/courses",
+    "/billing/Recharge-wallet",
+    "/billing/Transaction-history",
+    "/billing/Plans",
+    "/settings/Account-settings",
+    "/settings/Invoice-information",
+    "/settings/User-Management",
+    // admin routes
+    "/admin/user-management",
+    "/admin/user/:slug*",
+    "/admin/manage-orders",
+    "/admin/product-management",
+    "/admin/product-management/CreateBlog",
+    "/admin/fund-management",
+    "/admin/analytics",
+    "/admin/manage-notifications",
+    "/admin/settings",
+  ],
 };

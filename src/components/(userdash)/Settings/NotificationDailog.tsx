@@ -10,16 +10,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { uploadImageToS3 } from "@/actions/UploadImage";
 import { useState } from "react";
+import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";
 
 export function NotificationDialog() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [customEmail, setCustomEmail] = useState("");
   const [showCustomEmail, setShowCustomEmail] = useState(false);
   const [To, setTo] = useState<string>("To");
-  const [heading, setheading] = useState<string>("");
-  const [message, setmessage] = useState<string>("");
-  const [imageurl, setimageurl] = useState<string | null>("");
+  const [heading, setHeading] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string | null>("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -29,25 +31,61 @@ export function NotificationDialog() {
 
   const handleFormSubmit = async () => {
     try {
+      let fileUrl = "";
+
+      // Upload image if available
+      if (selectedFile) {
+        const uploadedImageUrl = await uploadImageToS3(selectedFile);
+        await fetch(uploadedImageUrl, {
+          method: "PUT",
+          headers: {
+            "Content-Type": selectedFile.type,
+          },
+          body: selectedFile,
+        });
+        fileUrl = uploadedImageUrl.split("?")[0];
+        setImageUrl(fileUrl);
+        const res = await pushNotificationAll(
+          heading,
+          message,
+          To,
+          fileUrl,
+          customEmail
+        );
+        console.log(res)
+      }
+
+      // Push notification
       const res = await pushNotificationAll(
         heading,
         message,
         To,
-        imageurl,
+        fileUrl,
         customEmail
       );
       console.log(res);
-      alert("done");
+      SucessToast("Notification sent successfully!");
+
+      // Reset state after submission
+      setSelectedFile(null);
+      setCustomEmail("");
+      setHeading("");
+      setMessage("");
+      setImageUrl(null);
+      setShowCustomEmail(false);
+      setTo("To");
     } catch (error) {
-      console.log(error);
-      alert("error");
+      console.error(error);
+      ErrorToast("Failed to send notification");
     }
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="bg-blue-600 ">Create New Notification</div>
+        <div className="bg-blue-600 cursor-pointer p-2 text-white">
+          Create New Notification
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[65vw] h-[99vh] overflow-y-scroll">
         <DialogHeader>
@@ -111,8 +149,8 @@ export function NotificationDialog() {
               type="text"
               placeholder="Notification Title"
               value={heading}
-              onChange={(e) => setheading(e.target.value)}
-              className="w-full border-[2px] outline-none p-2 "
+              onChange={(e) => setHeading(e.target.value)}
+              className="w-full border-[2px] outline-none p-2"
             />
           </div>
 
@@ -127,7 +165,7 @@ export function NotificationDialog() {
               type="text"
               id="message"
               value={message}
-              onChange={(e) => setmessage(e.target.value)}
+              onChange={(e) => setMessage(e.target.value)}
               placeholder="Message"
               className="w-full border-[2px] p-2 outline-none"
             />
@@ -137,8 +175,8 @@ export function NotificationDialog() {
             <label className="block text-gray-700 font-semibold mb-2">To</label>
             <div className="flex space-x-2">
               <button
-                className={` ${
-                  To == "ALL" ? "bg-blue-500 text-white" : "text-black"
+                className={`${
+                  To === "ALL" ? "bg-blue-500 text-white" : "text-black"
                 } border-[1px] rounded-full p-2`}
                 onClick={() => {
                   setShowCustomEmail(false);
@@ -148,8 +186,8 @@ export function NotificationDialog() {
                 All Users
               </button>
               <button
-                className={` ${
-                  To == "ACTIVE" ? "bg-blue-500 text-white" : ""
+                className={`${
+                  To === "ACTIVE" ? "bg-blue-500 text-white" : ""
                 } border-[1px] rounded-full p-2`}
                 onClick={() => {
                   setShowCustomEmail(false);
@@ -159,8 +197,8 @@ export function NotificationDialog() {
                 Active Users
               </button>
               <button
-                className={` ${
-                  To == "PAID" ? "bg-blue-500 text-white" : ""
+                className={`${
+                  To === "PAID" ? "bg-blue-500 text-white" : ""
                 } border-[1px] rounded-full p-2`}
                 onClick={() => {
                   setShowCustomEmail(false);
@@ -170,8 +208,8 @@ export function NotificationDialog() {
                 Paid Users
               </button>
               <button
-                className={` ${
-                  To == "CUSTOM" ? "bg-blue-500 text-white" : ""
+                className={`${
+                  To === "CUSTOM" ? "bg-blue-500 text-white" : ""
                 } border-[1px] rounded-full p-2`}
                 onClick={() => {
                   setShowCustomEmail(true);
@@ -196,7 +234,11 @@ export function NotificationDialog() {
         </div>
 
         <DialogFooter>
-          <button type="submit" onClick={handleFormSubmit}>
+          <button
+            type="submit"
+            onClick={handleFormSubmit}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md"
+          >
             Send Notification
           </button>
         </DialogFooter>

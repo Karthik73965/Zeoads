@@ -1,5 +1,5 @@
-import CtaBlog from '@/components/Blogs/CtaBlog'
-import MainBlog from '@/components/Blogs/MainBlog'
+import CtaBlog from '@/components/Blog/CtaBlog'
+import MainBlog from '@/components/Blog/MainBlog'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import React from 'react'

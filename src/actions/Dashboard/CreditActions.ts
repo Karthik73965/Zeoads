@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/utils/db";
-import { log } from "console";
 
 export const CreateWallet = async (
   userId: string,
@@ -71,6 +70,7 @@ export const addBalanceTowallet = async (
   mode: string
 ) => {
   try {
+    console.log("addbalance log -------------------------------------------------------------")
     const getWallet = await prisma.creditAccount.findUnique({
       where: { id, userId },
     });

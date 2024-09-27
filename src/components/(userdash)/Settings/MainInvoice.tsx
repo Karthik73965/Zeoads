@@ -6,6 +6,7 @@ import {
     InvoiceInfo,
     UpdateInvoiceInfp,
 } from "@/actions/Dashboard/UtilsActions";
+import { SucessToast } from "@/utils/ToastFucntion";
 
 type Props = {};
 
@@ -51,7 +52,7 @@ export default function MainInvoice({ }: Props) {
         try {
             const response = await UpdateInvoiceInfp(userInfo.id, name, type, country, email, address, zipcode, taxOffice, regNumber, phoneNumber, selectedModel, selectedCurrency);
             console.log(response);
-            alert("Invoice updated successfully");
+            SucessToast("Invoice updated successfully");
         } catch (error) {
             console.error("Failed to update invoice info", error);
         }

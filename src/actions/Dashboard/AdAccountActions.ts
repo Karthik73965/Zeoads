@@ -2,9 +2,10 @@
 
 import Balance from "@/components/(userdash)/Agencies/slug/Balance";
 import { prisma } from "@/utils/db";
+import { log } from "console";
 
 export const CreateAdAccount = async (
-    userId:string,
+  userId: string,
   name: string,
   email: string,
   phoneNumber: string,
@@ -13,7 +14,7 @@ export const CreateAdAccount = async (
   creditAccount: string,
   currency: string,
   timezone: string,
-  weblink: string , 
+  weblink: string
 ) => {
   try {
     const NewAdAccount = await prisma.account.create({
@@ -30,7 +31,7 @@ export const CreateAdAccount = async (
         currency,
         timezone,
         weblink,
-        balance:0
+        balance: 0,
       },
     });
     return NewAdAccount;
@@ -53,16 +54,85 @@ export const getAdAccounts = async (userId: string) => {
   }
 };
 
-export const AdAccountDetails = async (id:string)=>{
+export const AdAccountDetails = async (id: string) => {
   try {
     const data = await prisma.account.findUnique({
-      where:{id}
-    })
-    
-    return data
+      where: { id },
+    });
+
+    return data;
   } catch (error) {
     console.log(error);
-    return null     
-    
+    return null;
+  }
+};
+
+//--------------------------------- Add Balance to the account actions -----------------------------
+
+export const addBalanceToAdAcc = async (
+  id: string,
+  userId: string,
+  Acc_id: string,
+  amount: number
+) => {
+  try {
+    const wallet = await prisma.creditAccount.findUnique({
+      where: { id, userId },
+    });
+    const adaccount = await prisma.account.findUnique({
+      where: { id: Acc_id },
+    });
+
+    if (wallet && adaccount) {
+      if(wallet?.balance < amount ){
+        return "Insufficient Balance"
+      }
+      const txn = await prisma.accountTxns.create({
+        data: {
+          name: wallet.name,
+          Acc_id,
+          type: adaccount.model,
+          creditAcc: wallet.id,
+          status: "PENDING",
+          amount,
+        },
+      });
+      await prisma.creditAccount.update({
+        where:{id } , 
+        data:{
+          balance:wallet.balance - amount
+        }
+      })
+      
+      // await prisma.account.update({
+      //   where: { id: Acc_id },
+      //   data: {
+      //       balance:adaccount.balance + amount
+      //   },
+      // });
+
+      console.log("transacton ", txn);
+      return txn;
+    } else {
+      console.log(wallet, adaccount);
+
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+
+export const getAccountFunds = async (Acc_id:string)=>{
+  try {
+    const data = await prisma.accountTxns.findMany({
+      where:{Acc_id}
+    })
+    return data
+  } catch (error) {
+    console.log(error)
+return null 
   }
 }

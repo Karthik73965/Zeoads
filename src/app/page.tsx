@@ -26,7 +26,7 @@ export default function Page({}: Props) {
     <WhyZeoAds/>
     <Problem/>
     <HomeCta/>
-    <Stories/>
+    <Stories/>    
     <Faq/>
     <Appointnment/>
     <Stats/>

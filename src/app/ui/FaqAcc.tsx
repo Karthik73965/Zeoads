@@ -7,7 +7,7 @@ import {
 
 export function FaqAcc() {
   return (
-    <Accordion type="single" collapsible className="w mx-20">
+    <Accordion type="single" collapsible className=" md:mx-20">
       <AccordionItem className="" value="item-1">
         <AccordionTrigger>How do I buy Zeoads Agency account?</AccordionTrigger>
         <AccordionContent>

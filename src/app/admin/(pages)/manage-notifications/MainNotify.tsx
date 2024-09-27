@@ -4,6 +4,7 @@ import { NotificationDialog } from "@/components/(userdash)/Settings/Notificatio
 import React, { useEffect, useState } from "react";
 import EditBannerCta from "./EditBannerCta";
 import EditProductVideo from "./EditProductVideo";
+import { ErrorToast } from "@/utils/ToastFucntion";
 
 const MainNotify = () => {
   const [activeTab, setActiveTab] = useState("Notifications");
@@ -74,7 +75,7 @@ const Notification = () => {
       setNotifications(data);
     } catch (error) {
       console.log(error);
-      alert("errror");
+      ErrorToast("errror");
     }
   };
 

@@ -1,67 +1,80 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { verifyToken } from '@/utils/helpers';
+import React, { useEffect, useState } from "react";
+import { verifyToken } from "@/utils/helpers";
+import Script from "next/script";
+import { CreateUser } from "@/actions/AuthActions";
+import { useRouter } from "next/navigation";
+import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";
+interface Props {}
 
-import Script from 'next/script';
-import { CreateUser } from '@/actions/AuthActions';
-interface Props { }
+export default function Page({}: Props) {
+  const [status, setStatus] = useState<boolean>(false);
+  const [otplessinfo, setotplessinfo] = useState<any>(null);
 
-export default function Page({ }: Props) {
-    const [status, setStatus] = useState<boolean>(false)
-    const [otplessinfo, setotplessinfo] = useState<any>(null)
+  const token: string | null = otplessinfo
+    ? JSON.parse(otplessinfo).token
+    : null;
 
-    const token: string | null = otplessinfo ? JSON.parse(otplessinfo).token : null;
+  const userId: string = otplessinfo
+    ? JSON.parse(otplessinfo).userId
+    : null || "";
 
-    const userId: string = otplessinfo ? JSON.parse(otplessinfo).userId : null || "";
+  const router = useRouter();
 
+  useEffect(() => {
+    const handleOtpless = (otplessUser: any) => {
+      setotplessinfo(JSON.stringify(otplessUser));
+      setStatus(true);
+    };
+    //@ts-ignore
+    window.otpless = handleOtpless;
+  }, []);
 
-    useEffect(() => {
-        const handleOtpless = (otplessUser: any) => {
-            setotplessinfo(JSON.stringify(otplessUser));
-            setStatus(true);
-        };
-        //@ts-ignore
-        window.otpless = handleOtpless;
+  const toast = (response: any) => {
+    ErrorToast(response.message);
+  };
+  useEffect(() => {
+    const getIdAcessTokenAsync = async () => {
+      if (!token) {
+        return;
+      }
+      try {
+        const userDetail = await verifyToken(
+          token,
+          "VR65QXGRT6YJUJHCOHVB607YVGE9VZP6",
+          "ehjruitnzlu5h5g0i3la86smqh44mry2"
+        );
 
-    }, [token]);
+        if (userDetail) {
+          const response = await CreateUser(
+            userId,
+            userDetail.name,
+            userDetail.email,
+            userDetail.phone_number,
+            userDetail.country_code
+          );
 
-    useEffect(() => {
-        const getIdAcessTokenAsync = async () => {
-            if (!token) {
-                return;
-            }
+          if (response?.status) {
+            toast(response.message);
+          } else {
+            toast(response.message);
+            setTimeout(() => {
+              router.push("/dashboard");
+            }, 5000);
+          }
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        ErrorToast("Internal server error");
+      }
+    };
 
-            try {
-                const userDetail = await verifyToken(token, "VR65QXGRT6YJUJHCOHVB607YVGE9VZP6", "ehjruitnzlu5h5g0i3la86smqh44mry2").then(async (details: any) => {
-                    await CreateUser(userId, details.name, details.email, details.phone_number, details.country_code).then((response: any) => {
-                        alert(response.message)
-                        window.location.reload()
-                    }).catch((err) => {
-                        alert(err)  
-                    })
-                }).catch((error: any) => {
-                    alert(error)
-                })
+    getIdAcessTokenAsync();
+  }, [token, status, userId, router]);
 
-
-            } catch (error) {
-                console.error('Error verifying token:', error);
-            }
-        };
-
-        getIdAcessTokenAsync();
-    }, [token, status , userId]);
-
-    return (
-        <main className='pt-10 dh-bg h-screen'>
-            <Script
-                strategy="beforeInteractive"
-                id="otpless-sdk"
-                type="text/javascript"
-                data-appid="40QPLY4PUSRV0E0VMZCU"
-                src="https://otpless.com/v2/auth.js"
-            />
-            <div className='  h-screen' id="otpless-login-page"></div>
-        </main>
-    );
+  return (
+    <main className="pt-10 dh-bg h-screen">
+      <div className="  h-screen" id="otpless-login-page"></div>
+    </main>
+  );
 }

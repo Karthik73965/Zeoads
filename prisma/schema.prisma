@@ -104,20 +104,35 @@ model CreditTxns {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  accountId String ?       @db.ObjectId
+  accountId String?        @db.ObjectId
   account   CreditAccount? @relation(fields: [accountId], references: [id], onDelete: Cascade)
 }
 
 // ------------------------------ ANALYTICS --------------------------------
-model MonltyStats {
+model MonthlyStats {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  Month          String
-  Orders         Int?
-  CollectedFunds Int?
-  PendingFunds   Int?
-  AccountsSold   Int?
+  month          String
+  year           String
+  orders         Int?     @default(0)
+  collectedFunds Int?     @default(0)
+  pendingFunds   Int?     @default(0)
+  accountsSold   Int?     @default(0)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  analytxns analytxns[] @relation("MonthlyStatsAnalytxns")
+}
+
+model analytxns {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  month          String
+  year           String
+  amount         Int
+  monthlyStatsId String       @db.ObjectId
+  monthlyStats   MonthlyStats @relation("MonthlyStatsAnalytxns", fields: [monthlyStatsId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model FundsCollected {
@@ -153,6 +168,34 @@ model Blog {
   updatedAt DateTime @updatedAt
 }
 
+model annoucement {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  message   String
+  HexaCode  String
+  BgCode    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PricePanel {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  leftPanel  Json[]
+  rightPanel Json[]
+  Price      Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model AdServer {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  logo      String?
+  feautures Json[]
+  currency  Json[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 // ------------------------------ UTILS  --------------------------------
 model invoice {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -169,6 +212,21 @@ model invoice {
   currency    String?
   userId      String   @unique
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+//-------------------------------ADMIN MODEL ------------------------------
+model Admin {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String   @unique
+  image       String   @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzBXNuO6PezhC18aYH_2cYtS0I7KbxoKYdwA&s")
+  password    String
+  phoneNumber String
+  adress      String
+  pinCode     String
+  bio         String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

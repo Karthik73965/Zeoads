@@ -6,27 +6,28 @@ export const pushNotificationAll = async (
   heading: string,
   message: string,
   To: string,
-  image_url: string | null , 
-  email :string
+  image_url: string,
+  email: string
 ) => {
   try {
-    if(email){
+    if (email) {
       const user = await prisma.user.findUnique({
-        where:{email}
-      })
-      if(user){
+        where: { email },
+      });
+      if (user) {
         const res = await prisma.notification.create({
-          data:{
-            heading , 
-            message , 
+          data: {
+            heading,
+            image_url,
+            message,
             //@ts-ignore
-            To, 
-            userId:user.id
-          }
-        })
-        return res
-      }else{
-        return null 
+            To,
+            userId: user.id,
+          },
+        });
+        return res;
+      } else {
+        return null;
       }
     }
     const res = await prisma.notification.create({
@@ -35,10 +36,10 @@ export const pushNotificationAll = async (
         message,
         //@ts-ignore
         To,
-        image_url
+        image_url,
       },
     });
-    
+
     return res;
   } catch (error) {
     console.log(error);
@@ -46,18 +47,78 @@ export const pushNotificationAll = async (
   }
 };
 
-export const getAllNotifications = async ()=>{
+export const getAllNotifications = async () => {
   try {
     const data = await prisma.notification.findMany({
-      where:{
+      where: {
         To: {
           not: "CUSTOM",
-        }, 
-      }
-    })
-    return data
+        },
+      },
+    });
+    return data;
   } catch (error) {
     console.log(error);
-    return null
+    return null;
   }
-}
+};
+export const getNotifications = async (userId: string) => {
+  try {
+    // Get the current date and define the start and end of the current month manually
+    const currentDate = new Date();
+    const monthStart = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      1
+    );
+    const monthEnd = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() + 1,
+      0,
+      23,
+      59,
+      59,
+      999
+    );
+
+    // Check if the user has made a "PAID" transaction within this month
+    const paidUser = await prisma.testTransaction.findFirst({
+      where: {
+        userId,
+        status: "COMPLETED",
+        createdAt: {
+          gte: monthStart,
+          lte: monthEnd,
+        },
+      },
+    });
+
+    // Fetch notifications based on the subscription status
+    const notifications = await prisma.notification.findMany({
+      where: {
+        OR: [
+          // Notifications for all users
+          { To: "ALL" },
+          // Notifications for active/paid users (if the user is paid)
+          { To: paidUser ? "PAID" : "ACTIVE" },
+          // Custom notifications (for this specific user)
+          { To: "CUSTOM", userId },
+          // Personal notifications (directly addressed to this user)
+          { userId },
+        ],
+        // Filter by the creation date
+        createdAt: {
+          gte: monthStart,
+        },
+      },
+      orderBy: {
+        createdAt: "desc", // Sort by most recent
+      },
+    });
+
+    return notifications;
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    return null;
+  }
+};

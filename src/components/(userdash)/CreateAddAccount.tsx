@@ -7,6 +7,7 @@ import DemoVideo from "./Home/DemoVideo";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import { CreateAdAccount } from "@/actions/Dashboard/AdAccountActions";
 import { getAllWallets } from "@/actions/Dashboard/CreditActions";
+import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";
 
 export function CreateAddAccount() {
   const [step, setStep] = useState<number>(1);
@@ -40,10 +41,10 @@ export function CreateAddAccount() {
         Link
       );
       console.log(response);
-      alert("Done");
+      SucessToast("Account submitted sucessfull");
     } catch (error) {
       console.log(error);
-      alert("Error");
+      ErrorToast("Error");
     }
   };
 
@@ -53,7 +54,7 @@ export function CreateAddAccount() {
       const reduced = data?.map((account:any) => account.name) || [];
       setWallets(reduced);
     } catch (error) {
-      alert(error);
+      ErrorToast("Interal server Error")
     }
   }, [userinfo?.id]);
 

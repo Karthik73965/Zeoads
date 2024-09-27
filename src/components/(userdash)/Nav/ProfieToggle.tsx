@@ -16,7 +16,7 @@ export function ProfileToggle() {
     {
         userinfo ?  <DropdownMenu>
         <DropdownMenuTrigger asChild>
-            <div className='w-[124px] cursor-pointer bg-white flex gap-[8px] py-[8px] px-[4px] rounded-[8px]'>
+            <div className='cursor-pointer bg-white flex gap-[8px] py-[8px] px-[4px] rounded-[8px]'>
                 <img className='w-[32px] h-[32px] rounded-full' src={userinfo.image} alt="profile" />
                 <div className='text-[#727F8F] mt-1 font-medium truncate'> {userinfo.name}</div>
                 <img className='w-[24px] h-[24px] mt-1' src="/userDash/Nav/dropIcon.svg" alt="icon" />

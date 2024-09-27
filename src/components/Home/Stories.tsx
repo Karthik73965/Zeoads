@@ -40,11 +40,11 @@ const handleright = () => {
 }
     
 return (
-    <main className='bg-[#F5F6FA] mt-20 mx-20 rounded-[16px] h-[468px] py-[40px] px-[24px]'>
+    <main className='bg-[#F5F6FA] md:mt-20 md:mx-20 mx-4 rounded-[16px] md:h-[468px] py-[40px] px-[24px]'>
         <section className='flex flex-1 justify-between text-[32px] font-semibold text-[#171C20] text-center'>
-            <div>Success Stories</div>
+            <div className='text-[16px] mt-2 md:text-[32px]'>Success Stories</div>
             <section className='flex'>
-                <ul className='flex gap-x-3 mt-5 mr-10'>
+                <ul className='flex gap-x-3 mt-5 mr-5'>
                     <li className={`w-[8px] h-[8px] rounded-full ${index == 0 ? 'bg-[#4779E8]' : "bg-[#D9D9D9]"}`}></li>
                     <li className={`w-[8px] h-[8px] rounded-full ${index == 1 ? 'bg-[#4779E8]' : "bg-[#D9D9D9]"}`}></li>
                     <li className={`w-[8px] h-[8px] rounded-full ${index == 2 ? 'bg-[#4779E8]' : "bg-[#D9D9D9]"}`}></li>
@@ -59,8 +59,8 @@ return (
                 </div>
             </section>
         </section>
-        <section className='mt-10 flex  flex-1 justify-between'>
-            <img className='w-[564px] h-[320px] rounded-[4px] border-[1px]' alt='' src='/utils/StoreisTest.jpeg' />
+        <section className='mt-10 md:flex grid  flex-1 justify-between'>
+            <img className='md:w-[564px] md:h-[320px] rounded-[4px] border-[1px]' alt='' src='/utils/StoreisTest.jpeg' />
             <div className='ml-5 '>
                 <h5 className='text-[32px] font-semibold mt-10 '>{text[index]}</h5>
                 <p className='text-[#52606D] mt-5'>{description[index]}</p>

@@ -1,15 +1,8 @@
 "use client";
-
 import React from "react";
-import dynamic from "next/dynamic";
-const MainRecharge = dynamic(()=>import('./MainRecharge') , {
-  ssr:false
-})
-const DashNav = dynamic(()=>import('@/components/(userdash)/DashNav') , {
-  ssr:false
-})
+import MainRecharge from "./MainRecharge";
+import DashNav from "@/components/(userdash)/DashNav";
 import { Suspense } from "react";
-
 
 export default function Page({ params }: { params: { slug: string } }) {
   const id = params.slug || "";

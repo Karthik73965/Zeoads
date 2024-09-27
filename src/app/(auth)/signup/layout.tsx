@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,7 +16,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>
-
+      <Script
+                strategy="beforeInteractive"
+                id="otpless-sdk"
+                type="text/javascript"
+                data-appid="40QPLY4PUSRV0E0VMZCU"
+                src="https://otpless.com/v2/auth.js"
+            />
     </html>
   );
 }
