@@ -122,3 +122,49 @@ export const getNotifications = async (userId: string) => {
     return null;
   }
 };
+
+//--------------------------------------- Video Handles ------------------------------------------------------
+
+export const updateDbforVideos = async (title: string, url: string) => {
+  try {
+    const res = await prisma.videos.findUnique({
+      where: {
+        title,
+      },
+    });
+    if (res) {
+      await prisma.videos.update({
+        where: { title },
+        data: {
+          url,
+        },
+      });
+      return true;
+    } else {
+      await prisma.videos.create({
+        data: {
+          title,
+          url,
+        },
+      });
+      return true;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+export const getVideobyTitle = async (title: string) => {
+  console.log(("getting url"))
+  try {
+    const data = await prisma.videos.findUnique({
+      where: { title },
+    });
+    console.log(data)
+    return data?.url;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

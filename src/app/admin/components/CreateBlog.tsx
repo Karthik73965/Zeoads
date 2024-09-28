@@ -1,7 +1,7 @@
 "use client";
 
 import { CreateBLog } from "@/actions/admin/ProductActions";
-import { uploadImageToS3 } from "@/actions/UploadImage";
+import { uploadImageToS3 } from "@/actions/UploadS3";
 import { ErrorToast, SucessToast, WarnToast } from "@/utils/ToastFucntion";
 import React, { useState } from "react";
 

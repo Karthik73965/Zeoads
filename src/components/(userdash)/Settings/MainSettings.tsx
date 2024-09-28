@@ -5,7 +5,7 @@ import MainNav from "../MainNav";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import "react-toastify/dist/ReactToastify.css";
 import { getUserInfoDb } from "@/actions/StateActions";
-import { uploadImageToS3 } from "@/actions/UploadImage";
+import { uploadImageToS3 } from "@/actions/UploadS3";
 import { Bounce, toast, ToastContainer, ToastTransition } from "react-toastify";
 import { ErrorToast, SucessToast, WarnToast } from "@/utils/ToastFucntion";
 import { CheckIsSubUser } from "@/utils/SubUserUtils";

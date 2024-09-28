@@ -32,8 +32,8 @@ export default function MainRecharge({}: Props) {
   return (
     <main className="w-full min-h-screen dh-bg">
       <MainNav />
-      <section className="mx-5 mt-10 flex flex-col md:flex-row gap-4">
-        <div className="flex bg-white border-[1px] gap-[16px] h-[56px] w-[364px] rounded-[8px] px-3">
+      <section className="mx-5 mt-10 flex flex-col md:flex-row md:justify-between gap-4">
+        <div className="flex bg-white border-[1px]  gap-[16px] h-[56px] w-[364px] rounded-[8px] px-3">
           <img
             className="w-[22px] my-auto h-[22px]"
             src="/userDash/Nav/search.png"
@@ -51,7 +51,7 @@ export default function MainRecharge({}: Props) {
         {wallets &&
           wallets.map((i: CreditAccount, index: number) => (
             <CreditCard
-              key={i.id} // Always add a key when mapping
+              key={i.id}
               balance={i.balance}
               name={i.name}
               currency={i.currency}

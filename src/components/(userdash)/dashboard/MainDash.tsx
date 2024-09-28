@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import MainNav from "../MainNav";
 import DashFilter from "./DashFilter";
 import DashCard from "./DashCard";
@@ -7,11 +7,29 @@ import { DailySpentChart } from "./DailySpentChart";
 import PromoPie from "./PromoPie";
 import { useRouter } from "next/navigation";
 import { KPICHART } from "./KPIchart";
+import { getVideobyTitle } from "@/actions/admin/NotifyActions";
 
 type Props = {};
 
 export default function MainDash({}: Props) {
   const [complete, SetComplete] = useState<boolean>(false);
+  const [videoUrl, setVideoUrl] = useState<string>("");
+
+  const getVideo = useCallback(async () => {
+    try {
+      const data = await getVideobyTitle("BANNER_CTA");
+
+      if (data) {
+        setVideoUrl(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getVideo();
+  }, [getVideo]);
   const router = useRouter();
   return (
     <main className="w-fit md:w-[100vw-252px]">
@@ -34,11 +52,19 @@ export default function MainDash({}: Props) {
             Mark As Complete{" "}
           </div>
         </div>
-        <img
-          className="md:w-[534px] md:h-[320px]  rounded-[8px]"
-          src="/userDash/video.svg"
-          alt="video"
-        />
+        {videoUrl ? (
+          <video
+            className=" w-[534px] h-[320px] rounded-xl mt-5 rounded-t-3xl"
+            src={videoUrl}
+            controls
+          ></video>
+        ) : (
+          <img
+            className="md:w-[534px] md:h-[320px]  rounded-[8px]"
+            src="/userDash/video.svg"
+            alt="video"
+          />
+        )}
       </section>
       {/* Analytics */}
       {complete ? (

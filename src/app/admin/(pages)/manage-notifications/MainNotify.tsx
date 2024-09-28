@@ -2,41 +2,36 @@
 import { getAllNotifications } from "@/actions/admin/NotifyActions";
 import { NotificationDialog } from "@/components/(userdash)/Settings/NotificationDailog";
 import React, { useEffect, useState } from "react";
-import EditBannerCta from "./EditBannerCta";
+import EditBannerCta from "./comp/EditBannerCta";
 import EditProductVideo from "./EditProductVideo";
 import { ErrorToast } from "@/utils/ToastFucntion";
 
 const MainNotify = () => {
   const [activeTab, setActiveTab] = useState("Notifications");
 
-  const handleCreateNew = () => {
-    // Implement create new notification functionality here
-    console.log("Create new notification");
-  };
 
   return (
     <div className="  p-6 dh-bg rounded-lg mx-5">
       <div className="flex justify-between items-center mb-6">
         <div className="flex space-x-4 rounded-md border-[1px] bg-white p-2">
-          {["Notifications", "Banner CTA Video", "Product Video"].map((tab:any) => (
-            <button
-              key={tab}
-              className={`px-4 py-2 ${
-                activeTab === tab
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-500"
-              }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
+          {["Notifications", "Banner CTA Video", "Product Video"].map(
+            (tab: any) => (
+              <button
+                key={tab}
+                className={`px-4 py-2 ${
+                  activeTab === tab
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : "text-gray-500"
+                }`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            )
+          )}
         </div>
         {activeTab == "Notifications" ? (
-          <button
-            className="px-4 py-2 bg-blue-600 h-[56px] text-white rounded-md hover:bg-blue-700 p-2 transition-colors"
-            onClick={handleCreateNew}
-          >
+          <button className="px-4 py-2 bg-blue-600 h-[56px] text-white rounded-md hover:bg-blue-700 p-2 transition-colors">
             <NotificationDialog />
           </button>
         ) : (

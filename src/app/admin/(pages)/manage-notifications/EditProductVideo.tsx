@@ -1,21 +1,43 @@
 "use client";
-import React, { useState } from "react";
+import { getVideobyTitle } from "@/actions/admin/NotifyActions";
+import React, { useCallback, useEffect, useState } from "react";
+import { ProductVideoEdit } from "./comp/ProductVideoEditModal";
 
 type Props = {};
 
 export default function EditProductVideo({}: Props) {
   const [selectedModel, setSelectedModel] = useState<string>("");
+  const [videoUrl, setVideoUrl] = useState<string>("");
+
+  const getVideo = useCallback(async () => {
+    try {
+      const data = await getVideobyTitle("PRODUCT_VIDEO");
+      if (data) {
+        setVideoUrl(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getVideo();
+  }, [getVideo]);
 
   return (
     <>
       {/* video */}
       <section className=" my-4  bg-white rounded-[8px] p-[24px]  border-[1px] border-[#E4E7EC] ">
         <div className="flex gap-[24px] pb-5">
-          <img
-            className="w-[454px] h-[250px] mt-7  rounded-[8px]"
-            src="/userDash/video.svg"
-            alt="video"
-          />
+           {videoUrl ? (
+          <video
+            className=" w-[454px] h-[250px] rounded-xl mt-5 rounded-t-2xl"
+            src={videoUrl}
+            controls
+          ></video>
+        ) : (
+          <div className="w-[534px] h-[320px] rounded-[8px]" />
+        )}
           <div className="mt-7 ">
             <div className="text-[#727F8F]">Here&apos;s Quick Tutorial!</div>
             <h3 className="font-medium mt-5 text-[24px] text-[#1F2933]">
@@ -58,9 +80,7 @@ export default function EditProductVideo({}: Props) {
         </div>
         {/* edit  */}
         <div className=" flex  justify-start gap-x-10 mb-3 mx-6 mt-3 fon">
-          <button className="bg-[#4779E8] h-[48px] text-white w-[80px] py-3 px-3 rounded-md border-[1px]">
-            Edit
-          </button>
+        <ProductVideoEdit/>
         </div>
       </section>
     </>

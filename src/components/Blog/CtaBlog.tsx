@@ -4,7 +4,7 @@ type Props = {};
 
 export default function CtaBlog({}: Props) {
   return (
-    <section className="mx-5 md:mx-20 mt-10 rounded-[8px] bg-[#F5F6FA] flex flex-col-reverse md:flex justify-between py-[40px] px-[24px]  gap-[24px] md:h-[400px]">
+    <section className="mx-5 md:mx-20 mt-10 rounded-[8px] bg-[#F5F6FA]  flex flex-col-reverse md:grid md:grid-cols-2 md:items-center  justify-between py-[40px] px-[24px]  gap-[24px] md:h-[400px]">
       <div>
         <div className=" font-bold block md:hidden  text-[20px] ">
           <span className="text-[#727F8F] ">Time to get </span>

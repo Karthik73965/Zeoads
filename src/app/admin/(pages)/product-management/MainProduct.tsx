@@ -114,7 +114,7 @@ const Blogs = () => {
   }, []);
 
   return (
-    <section className="flex flex-wrap size-96 scale-[.80] gap-x-10">
+    <section className="grid grid-cols-2 items-center m-20 gap-10  ">
       {blogs && blogs.length > 0 ? (
         blogs.map((blog) => (
           <BlogCard

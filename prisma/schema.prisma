@@ -10,7 +10,7 @@ datasource db {
 // ------------------------------ USER --------------------------------
 model User {
   id             String            @id @default(cuid()) @map("_id")
-  userId         String            
+  userId         String
   name           String
   email          String            @unique
   image          String            @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzBXNuO6PezhC18aYH_2cYtS0I7KbxoKYdwA&s")
@@ -203,6 +203,14 @@ model AdServer {
   logo      String?
   feautures Json[]
   currency  Json[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Videos {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String @unique
+  url       String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

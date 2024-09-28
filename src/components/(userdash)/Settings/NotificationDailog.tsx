@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { uploadImageToS3 } from "@/actions/UploadImage";
+import { uploadImageToS3 } from "@/actions/UploadS3";
 import { useState } from "react";
 import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";
 

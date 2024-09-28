@@ -33,7 +33,7 @@ export default function Page({ params }: { params: { slug: string } }) {
     <main className="pt-10">
       <Navbar route="Blog" />
       <center>
-        <div className="bg-[#F5F6FF] mx-auto mb-3 justify-center align-middle w-[73px] py-[4px] px-2 md:px-[24px] primary-text rounded-[100px] mt-20">
+        <div className="bg-[#F5F6FF] mb-3 justify-center align-middle w-[73px] py-[4px] px-2 md:px-[24px] primary-text rounded-[100px] mt-20">
           Blog
         </div>
       </center>
