@@ -1,16 +1,16 @@
 import { SignJWT, jwtVerify } from 'jose';
-import { User } from '@prisma/client';
+import { User, UserList } from '@prisma/client';
 
 const jwtSecret = process.env.JWT_SECRET || "";
 
 const secretKey = new TextEncoder().encode(jwtSecret);
 
-export async function generateToken(id: User): Promise<string> {
+export async function generateToken(id:any): Promise<string> {
   const payload = { id };
 
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' }) // HS256 algorithm for signing
-    .setExpirationTime('24h') 
+    .setExpirationTime('336h') 
     .sign(secretKey);
   return token;
 }

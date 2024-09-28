@@ -23,10 +23,13 @@ export function AddBalance({ id, Acc_id, name, balance, currency }: props) {
   const handleAddBalance = async () => {
     try {
       const data = await addBalanceToAdAcc(id, userinfo.id, Acc_id, amount);
-      if (data) {
-        SucessToast("Balance Added SucessFully");
-      }else{
-        ErrorToast("Something went wrong")
+      console.error(data);
+      if (data == "Insufficient Balance") {
+        SucessToast("Insuffcient Balance in the attached wallet");
+      } else if (data) {
+        SucessToast("Balance request  succesfully");
+      } else {
+        ErrorToast("Something went wrong");
       }
     } catch (error) {
       console.log(error);

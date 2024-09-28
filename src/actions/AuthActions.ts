@@ -18,14 +18,14 @@ export const CreateUser = async (
     if (user) {
       const token = await generateToken(user);
       cookies().set("access_token", token, {
-        maxAge: 86400,
+        maxAge: 86400 * 14,
         httpOnly: true,
         secure: false,
       });
       if (user.role == "NONE") {
         const roleToken = await generateRoleToken(user.role);
         cookies().set("role_token", roleToken, {
-          maxAge: 86400,
+          maxAge: 60,
           httpOnly: true,
           secure: false,
         });
@@ -54,14 +54,14 @@ export const CreateUser = async (
     });
     const token = await generateToken(CreatedUser);
     cookies().set("access_token", token, {
-      maxAge: 86400,
+      maxAge: 86400 * 14,
       httpOnly: true,
       secure: false,
     });
     if (CreatedUser.role == "NONE") {
       const roleToken = await generateRoleToken(CreatedUser.role);
       cookies().set("role_token", roleToken, {
-        maxAge: 3060,
+        maxAge: 60,
         httpOnly: true,
         secure: false,
       });
@@ -79,7 +79,7 @@ export const CreateUser = async (
   }
 };
 
-export const logOut =  () => {
+export const logOut = () => {
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("access_token");
@@ -88,10 +88,42 @@ export const logOut =  () => {
       cookieStore.delete("access_token");
       return true;
     } else {
-      return false; 
+      return false;
     }
   } catch (error) {
     console.error("Error logging out:", error);
-    return false; 
+    return false;
+  }
+};
+
+// -- check for sub user
+
+export const CheckSubUser = async (email: string) => {
+  try {
+    const user = await prisma.userList.findUnique({
+      where: { email , status:"Active" },
+    });
+    if (user) {
+      const santizedData = {
+        id: user.adminId,
+        subId: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      };
+      const token = await generateToken(santizedData);
+      //settign cookie
+      cookies().set("access_token", token, {
+        maxAge: 86400 * 14,
+        httpOnly: true,
+        secure: false,
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 };

@@ -23,10 +23,11 @@ export const OnboardingSubmit = async (monthlyAdSpend: string, whyPerformance: s
         })
         const token = await generateToken(updatingInfo)
         cookies().set("access_token", token, {
-            maxAge: 3600,
+            maxAge: 86400*14,
             httpOnly: true,
             secure: false,
         })
+        cookies().delete("role_token")
         return true
     } catch (error) {
         console.log(error)

@@ -7,7 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { getUserInfoDb } from "@/actions/StateActions";
 import { uploadImageToS3 } from "@/actions/UploadImage";
 import { Bounce, toast, ToastContainer, ToastTransition } from "react-toastify";
-import { ErrorToast } from "@/utils/ToastFucntion";
+import { ErrorToast, SucessToast, WarnToast } from "@/utils/ToastFucntion";
+import { CheckIsSubUser } from "@/utils/SubUserUtils";
 
 type Props = {};
 
@@ -44,6 +45,8 @@ export default function MainSettings({}: Props) {
   const fetchinfo = useCallback(async () => {
     //@ts-ignore
     const info = await getUserInfoDb(data?.id);
+    const checkSum = await CheckIsSubUser();
+    checkSum ? WarnToast("Main Account User Information is showing here ") : "";
     setuserinfo(info);
     if (info) {
       setname(info.name);

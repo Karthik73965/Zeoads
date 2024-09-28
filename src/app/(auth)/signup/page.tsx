@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { verifyToken } from "@/utils/helpers";
 import Script from "next/script";
-import { CreateUser } from "@/actions/AuthActions";
+import { CheckSubUser, CreateUser } from "@/actions/AuthActions";
 import { useRouter } from "next/navigation";
 import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";
+import { ToastContainer } from "react-toastify";
 interface Props {}
 
 export default function Page({}: Props) {
@@ -31,7 +32,7 @@ export default function Page({}: Props) {
   }, []);
 
   const toast = (response: any) => {
-    ErrorToast(response.message);
+    SucessToast(response.message);
   };
   useEffect(() => {
     const getIdAcessTokenAsync = async () => {
@@ -46,6 +47,13 @@ export default function Page({}: Props) {
         );
 
         if (userDetail) {
+          const check = await CheckSubUser(userDetail.email)
+          if(check) {
+            SucessToast("sub user has been there")
+            setTimeout(() => {
+              router.push("/dashboard");
+            }, 2000);
+          }         
           const response = await CreateUser(
             userId,
             userDetail.name,
@@ -55,12 +63,12 @@ export default function Page({}: Props) {
           );
 
           if (response?.status) {
-            toast(response.message);
+            SucessToast(response.message);
           } else {
             toast(response.message);
             setTimeout(() => {
               router.push("/dashboard");
-            }, 5000);
+            }, 2000);
           }
         }
       } catch (error) {
@@ -74,6 +82,7 @@ export default function Page({}: Props) {
 
   return (
     <main className="pt-10 dh-bg h-screen">
+      <ToastContainer />
       <div className="  h-screen" id="otpless-login-page"></div>
     </main>
   );
