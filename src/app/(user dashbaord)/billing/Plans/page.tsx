@@ -7,17 +7,21 @@ import PricingChild from "@/components/Pricing/PricingChild";
 import React, { useCallback, useEffect, useState } from "react";
 import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";
 
+// Razorpay integration
+import Script from "next/script";
+
 export default function Page() {
   const [transactions, setTransactions] = useState<any>(null);
   const userinfo = useUserInfo();
   const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<string>("");
 
+  // Fetch transactions and evaluate status
   const fetchTxns = useCallback(async () => {
     try {
       if (userinfo?.id) {
         const data = await getAllTxns(userinfo.id);
-        console.log(data)
+        console.log(data);
         setTransactions(data);
         if (data) {
           evaluateStatus(data);
@@ -28,6 +32,7 @@ export default function Page() {
     }
   }, [userinfo?.id]);
 
+  // Evaluate the user's current status based on their transaction history
   const evaluateStatus = (txns: any[]) => {
     if (txns.length > 0) {
       const now = new Date();
@@ -46,18 +51,87 @@ export default function Page() {
     }
   };
 
+  // Handle payment and trigger purchase process using Razorpay
   const handlePay = async () => {
     try {
+      const createOrderId = async () => {
+        try {
+          const response = await fetch("/api/order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              amount: 5999 * 100, // amount in paisa (Razorpay expects smallest unit)
+              currency: "INR", // Razorpay currency
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to create order");
+          }
+
+          const data = await response.json();
+          return data.orderId;
+        } catch (error) {
+          console.error("Error creating order:", error);
+        }
+      };
+
+      const processRazorpayPayment = async () => {
+        try {
+          const orderId = await createOrderId();
+
+          const options = {
+            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
+            amount: 5999 * 100, // Razorpay expects amount in the smallest unit
+            currency: "INR",
+            name: userinfo?.name || "User",
+            description: "Purchase Plan",
+            order_id: orderId,
+            handler: async function (response: any) {
+              try {
+                // Call purchase5999 function once payment is successful
+                const purchaseResponse = await purchase5999(
+                  5999,
+                  "INR",
+                  userinfo?.id
+                );
+                if (purchaseResponse) {
+                  SucessToast("Transaction successful");
+                  fetchTxns(); // Fetch the latest transactions to update the status
+                } else {
+                  ErrorToast("Purchase failed, please contact support");
+                }
+              } catch (error) {
+                console.error("Error during purchase:", error);
+                ErrorToast("Something went wrong");
+              }
+            },
+            prefill: {
+              name: userinfo?.name || "",
+              email: userinfo?.email || "",
+            },
+            theme: {
+              color: "#3399cc",
+            },
+          };
+
+          const rzp = new (window as any).Razorpay(options);
+          rzp.open();
+        } catch (error) {
+          console.error("Error processing Razorpay payment:", error);
+          ErrorToast("Payment failed");
+        }
+      };
+
       setLoading(true);
-      const data = await purchase5999(5999, "INR", userinfo?.id);
-      console.log(data)
+      await processRazorpayPayment(); // Trigger Razorpay payment process
       setLoading(false);
-      SucessToast("Transaction successful");
-      fetchTxns();
     } catch (error) {
       setLoading(false);
-      ErrorToast("Paymnet failed ")
-      console.log("Error processing payment:", error);
+      ErrorToast("Payment failed");
+      console.error("Error processing payment:", error);
     }
   };
 
@@ -73,6 +147,10 @@ export default function Page() {
 
       <section className="dh-bg w-[calc(100vw-252px)]">
         <MainNav />
+        <Script
+          id="razorpay-checkout-js"
+          src="https://checkout.razorpay.com/v1/checkout.js"
+        />
         <section className="gap-[24px] mt-5 border-[1px] border-[#E4E7EC] p-[16px] flex justify-between rounded-[8px]">
           <div className="w-[500px] bg-[#131516] h-[117px] p-[24px] text-white border-[1px] border-[#E4E7EC] rounded-[8px] text-center">
             <h3 className="font-medium mt-3 text-[24px]">Plans</h3>
@@ -80,7 +158,9 @@ export default function Page() {
           <div className="w-[500px] bg-[#131516] h-[117px] p-[24px] text-white border-[1px] border-[#E4E7EC] rounded-[8px] text-center">
             <h3 className="font-medium text-[24px]">
               Recharge Via Self
-              <p className="text-center text-[14px] text-[#E4E7EC]">{`(Non Commission Model)`}</p>
+              <p className="text-center text-[14px] text-[#E4E7EC]">
+                {`(Non Commission Model)`}
+              </p>
             </h3>
           </div>
         </section>
@@ -125,7 +205,7 @@ export default function Page() {
         <section className="gap-[24px] border-[1px] border-[#E4E7EC] p-[16px] flex justify-between rounded-[8px]">
           <div className="w-full bg-[#4779E8] h-[100px] p-[24px] text-white border-[1px] border-[#E4E7EC] rounded-[8px] text-center">
             <h3
-              onClick={() => status === "purchase" && handlePay()}
+              onClick={() => (status === "purchase" || status == "continue")&& handlePay()}
               className="font-semibold cursor-pointer text-[32px]"
             >
               {loading

@@ -63,14 +63,22 @@ export const getAllNotifications = async () => {
   }
 };
 export const getNotifications = async (userId: string) => {
+  console.log(userId);
   try {
-    // Get the current date and define the start and end of the current month manually
+    // Fetch the user's creation date
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { createdAt: true }, // Fetch only the creation date
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const userCreationDate = user.createdAt;
+
+    // Get the current date for setting the upper limit
     const currentDate = new Date();
-    const monthStart = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      1
-    );
     const monthEnd = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth() + 1,
@@ -81,13 +89,13 @@ export const getNotifications = async (userId: string) => {
       999
     );
 
-    // Check if the user has made a "PAID" transaction within this month
+    // Check if the user has made a "PAID" transaction after their creation date
     const paidUser = await prisma.testTransaction.findFirst({
       where: {
         userId,
         status: "COMPLETED",
         createdAt: {
-          gte: monthStart,
+          gte: userCreationDate, // Start from the user's creation date
           lte: monthEnd,
         },
       },
@@ -106,9 +114,9 @@ export const getNotifications = async (userId: string) => {
           // Personal notifications (directly addressed to this user)
           { userId },
         ],
-        // Filter by the creation date
+        // Filter by the user's creation date as the start date
         createdAt: {
-          gte: monthStart,
+          gte: userCreationDate,
         },
       },
       orderBy: {
@@ -122,6 +130,7 @@ export const getNotifications = async (userId: string) => {
     return null;
   }
 };
+
 
 //--------------------------------------- Video Handles ------------------------------------------------------
 
@@ -156,12 +165,12 @@ export const updateDbforVideos = async (title: string, url: string) => {
 };
 
 export const getVideobyTitle = async (title: string) => {
-  console.log(("getting url"))
+  console.log("getting url");
   try {
     const data = await prisma.videos.findUnique({
       where: { title },
     });
-    console.log(data)
+    console.log(data);
     return data?.url;
   } catch (error) {
     console.error(error);

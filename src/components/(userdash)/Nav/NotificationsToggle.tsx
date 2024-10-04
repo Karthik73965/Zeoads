@@ -21,6 +21,7 @@ export function NotificationsToggle() {
     const fetchNotifications = async () => {
       try {
         const data = await getNotifications(userinfo?.id);
+        console.log(data)
         if (data) {
           setNotifications(data);
         }

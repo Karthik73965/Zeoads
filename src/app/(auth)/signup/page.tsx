@@ -6,11 +6,13 @@ import { CheckSubUser, CreateUser } from "@/actions/AuthActions";
 import { useRouter } from "next/navigation";
 import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";
 import { ToastContainer } from "react-toastify";
+
 interface Props {}
 
 export default function Page({}: Props) {
   const [status, setStatus] = useState<boolean>(false);
-  const [otplessinfo, setotplessinfo] = useState<any>(null);
+  const [otplessinfo, setOtplessInfo] = useState<any>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   const token: string | null = otplessinfo
     ? JSON.parse(otplessinfo).token
@@ -18,22 +20,33 @@ export default function Page({}: Props) {
 
   const userId: string = otplessinfo
     ? JSON.parse(otplessinfo).userId
-    : null || "";
+    : "" || "";
 
   const router = useRouter();
 
+  // Ensuring the component is hydrated and running on the client side
   useEffect(() => {
-    const handleOtpless = (otplessUser: any) => {
-      setotplessinfo(JSON.stringify(otplessUser));
-      setStatus(true);
-    };
-    //@ts-ignore
-    window.otpless = handleOtpless;
+    setIsHydrated(true);
   }, []);
 
+  // Handle the otpless integration only on the client side
+  useEffect(() => {
+    if (isHydrated && typeof window !== "undefined") {
+      const handleOtpless = (otplessUser: any) => {
+        setOtplessInfo(JSON.stringify(otplessUser));
+        setStatus(true);
+      };
+      //@ts-ignore
+      window.otpless = handleOtpless;
+    }
+  }, [isHydrated]);
+
+  // Function to display success or error toasts
   const toast = (response: any) => {
     SucessToast(response.message);
   };
+
+  // Verify token and perform user actions
   useEffect(() => {
     const getIdAcessTokenAsync = async () => {
       if (!token) {
@@ -47,28 +60,29 @@ export default function Page({}: Props) {
         );
 
         if (userDetail) {
-          const check = await CheckSubUser(userDetail.email)
-          if(check) {
-            SucessToast("sub user has been there")
+          const check = await CheckSubUser(userDetail.email);
+          if (check) {
+            SucessToast("Sub user exists");
             setTimeout(() => {
               router.push("/dashboard");
             }, 2000);
-          }         
-          const response = await CreateUser(
-            userId,
-            userDetail.name,
-            userDetail.email,
-            userDetail.phone_number,
-            userDetail.country_code
-          );
-
-          if (response?.status) {
-            SucessToast(response.message);
           } else {
-            toast(response.message);
-            setTimeout(() => {
-              router.push("/dashboard");
-            }, 2000);
+            const response = await CreateUser(
+              userId,
+              userDetail.name,
+              userDetail.email,
+              userDetail.phone_number,
+              userDetail.country_code
+            );
+
+            if (response?.status) {
+              SucessToast(response.message);
+            } else {
+              toast(response.message);
+              setTimeout(() => {
+                router.push("/dashboard");
+              }, 2000);
+            }
           }
         }
       } catch (error) {
@@ -77,13 +91,32 @@ export default function Page({}: Props) {
       }
     };
 
-    getIdAcessTokenAsync();
+    if (status) {
+      getIdAcessTokenAsync();
+    }
   }, [token, status, userId, router]);
+
+  // Return nothing until the component is hydrated to avoid hydration mismatch errors
+  if (!isHydrated) {
+    return null;
+  }
 
   return (
     <main className="pt-10 dh-bg h-screen">
       <ToastContainer />
-      <div className="  h-screen" id="otpless-login-page"></div>
+      <div className="h-screen" id="otpless-login-page"></div>
+
+      {/* Example of including the otpless script */}
+      <Script
+        strategy="lazyOnload"
+        id="otpless-sdk"
+        type="text/javascript"
+        data-appid="40QPLY4PUSRV0E0VMZCU"
+        src="https://otpless.com/v2/auth.js"
+        onLoad={() => {
+          console.log("Otpless script loaded successfully.");
+        }}
+      />
     </main>
   );
 }

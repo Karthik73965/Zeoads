@@ -5,12 +5,12 @@ type Props = {};
 
 export default function Hero({}: Props) {
   return (
-    <main className="px-10 md:px-20 pt-[72px] mt-10 ">
+    <main className="px-5 md:px-20 pt-[80px] mt-10 ">
       <h1 className="text-center text-[20px] md:text-[56px] font-bold text-[#1F2933]">
-        Select the Platform to see its Picing.
+        Select the Platform to see its Pricing.
       </h1>
       <section className="bg-[#F5F6FA] py-[32px] md:px-[24px] gap-[16px] mt-5 md:h-[1413px]">
-        <section className="gap-x-[24px] border-[1px]  border-[#E4E7EC] md:p-[16px] flex justify-between rounded-[8px]">
+        <section className="gap-x-[24px] border-[1px]  border-[#E4E7EC] p-[16px] flex justify-between rounded-[8px]">
           <div className="md:w-[548px] w-[50%] bg-[#131516] h-[77px] md:h-[117px] px-[24px] md:p-[24px] text-white border-[1px] border-[#E4E7EC] rounded-[8px] md:text-center">
             <h3 className="font-medim  mt-3 text-[14px] md:text-[24px]">Plans</h3>
           </div>
@@ -23,7 +23,7 @@ export default function Hero({}: Props) {
             </h3>
           </div>
         </section>
-        <section className="flex md:gap-[16px]">
+        <section className="flex px-3 md:px-0 gap-[24px]">
           <PricingChild
             image1={"/pricing/img1.png"}
             text1="Spending Limit"

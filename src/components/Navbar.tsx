@@ -111,11 +111,11 @@ export default function Navbar({ route }: Props) {
                 Login
               </button>
             </Link>
-            <Link href="/signup">
+            <a href="/signup">
               <button className="h-[40px] -mt-2 border rounded-[4px] w-[137px] border-[#4779E8] bg-[#4779E8] text-white">
                 Get started
               </button>
-            </Link>
+            </a>
           </div>
         )}
 

@@ -13,18 +13,18 @@ export default function Compare({}: Props) {
       </h3>
 
       {/* table */}
-      <section className="grid ">
+      <section className="grid w-full max-w-[100vw] scale-90 md:scale-100  overflow-x-scroll ">
         <section className="flex">
           <div className="border-[1px] border-[#E4E7EC] px-[10px] py-[12px] text-center w-[41px] x md:w-[180px]  h-[56px]"></div>
           <div className="border-[1px] border-[#E4E7EC] text-[14px] md:text-[24px] font-medium px-[10px] py-[12px] text-center w-[510px] h-[56px]">
-            Regular     
+            Regular
           </div>
           <div className="border-[1px] border-[#E4E7EC] text-[14px] md:text-[24px] font-medium px-[10px] py-[12px] text-center w-[510px] h-[56px]">
             Zeoads Ad Account
           </div>
         </section>
         <section className="flex">
-          <div className="border-[1px]  border-[#E4E7EC] px-[10px] py-[100px] font-medium  text-[14px] md:text-[24px] rotate-90     text-center w-[41px] md:w-[180px]  h-[240px]">
+          <div className="border-[1px] border-[#E4E7EC] px-[10px] py-[20px] font-medium   text-[14px] md:text-[24px] text-center w-[41px] x md:w-[180px]  h-[240px]">
             Similarities
           </div>
           <div className="grid ">
