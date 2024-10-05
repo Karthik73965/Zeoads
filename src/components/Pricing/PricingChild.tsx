@@ -39,7 +39,7 @@ export default function PricingChild({
 }: Props) {
   return (
     <main className="md:h-[1036px] px-2  mt-5 gap-x-[40px]">
-      <div className="gap-[8px] md:gap-[24px] p-[24px] bg-white h-[80px]  text-center w-[158px]  md:w-[548px]">
+      <div className="gap-[8px] md:gap-[24px] p-[24px] bg-white h-[80px]  text-center   w-[38vw] md:w-[37vw] xl:w-[548px]">
         {image1 && text1 ? (
           <div className="flex gap-x-5">
             <img className="h-[24px] w-[24px]" src={image1} alt="image1" />
@@ -52,7 +52,7 @@ export default function PricingChild({
         )}
       </div>
       {/* 2nd  */}
-      <div className="gap-[8px] md:gap-[24px]  mt-5 p-[24px] bg-white h-[176px]    text-center  w-[158px]  md:w-[548px]">
+      <div className="gap-[8px] md:gap-[24px]  mt-5 p-[24px] bg-white h-[194px]    text-center    w-[38vw] md:w-[37vw] xl:w-[548px]">
         {image2 && text2 ? (
           <div className="flex gap-x-5 mt-14">
             <img className="h-[24px] w-[24px]" src={image2} alt="image1" />
@@ -65,7 +65,7 @@ export default function PricingChild({
         )}
       </div>
       {/* 3nd  */}
-      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[80px]   text-center w-[158px]  md:w-[548px]">
+      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[80px]   text-center   w-[38vw] md:w-[37vw] xl:w-[548px]">
         {image3 && text3 ? (
           <div className="flex gap-x-5">
             <img className="h-[24px] w-[24px]" src={image3} alt="image1" />
@@ -78,7 +78,7 @@ export default function PricingChild({
         )}
       </div>
       {/* 4nd  */}
-      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[176px]  text-center w-[158px]  md:w-[548px]">
+      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[176px]  text-center   w-[38vw] md:w-[37vw] xl:w-[548px]">
         {image4 && text4 ? (
           <div className="flex gap-x-5 mt-10">
             <img className="h-[24px] w-[24px]" src={image4} alt="image1" />
@@ -91,7 +91,7 @@ export default function PricingChild({
         )}
       </div>
       {/* 5nd  */}
-      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[80px]  text-center w-[158px]  md:w-[548px]">
+      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[80px]  text-center   w-[38vw] md:w-[37vw] xl:w-[548px]">
         {image5 && text5 ? (
           <div className="flex gap-x-5">
             <img className="h-[24px] w-[24px]" src={image5} alt="image1" />
@@ -105,7 +105,7 @@ export default function PricingChild({
       </div>
       {/* 6nd  */}
 
-      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[80px]  text-center w-[158px]  md:w-[548px]">
+      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[80px]  text-center   w-[38vw] md:w-[37vw] xl:w-[548px]">
         {image6 && text6 ? (
           <div className="flex gap-x-5">
             <img className="h-[24px] w-[24px]" src={image6} alt="image1" />
@@ -119,7 +119,7 @@ export default function PricingChild({
       </div>
       {/* 7nd  */}
 
-      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[112px]  text-center w-[158px]  md:w-[548px]">
+      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[112px]  text-center   w-[38vw] md:w-[37vw] xl:w-[548px]">
         {image7 && text7 ? (
           <div className="flex ga">
             <img className="h-[24px] w-[24px]" src={image7} alt="image1" />
@@ -132,7 +132,7 @@ export default function PricingChild({
         )}
       </div>
       {/* 8nd  */}
-      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[80px]  text-center w-[158px]  md:w-[548px]">
+      <div className="gap-[8px] md:gap-[24px] mt-5 p-[24px] bg-white h-[80px]  text-center   w-[38vw] md:w-[37vw] xl:w-[548px]">
         {image8 && text8 ? (
           <div className="flex gap-x-5">
             <img className="h-[24px] w-[24px]" src={image8} alt="image1" />

@@ -7,7 +7,7 @@ export default function Stats({}: Props) {
     <main className="md:mx-20 md:mt-20 mx-5 rounded-2xl py-5 md:py-[40px] ">
       <img
         src="/utils/world.png"
-        className="stats-bg -z-10 rounded-2xl bg-[#F3EFD8] "
+        className="stats-bg -z-10 w-[90vw] md:w-auto rounded-2xl bg-[#F3EFD8] "
         alt="Cover image"
       />
       <center className="status-content md:py-[40px]">

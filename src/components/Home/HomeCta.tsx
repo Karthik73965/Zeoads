@@ -4,7 +4,7 @@ type Props = {}
 
 export default function HomeCta({ }: Props) {
     return (
-        <main className='md:h-[304px]  md:px-20 w-[100vw] overflow-x-hidden px-7 rouded-2xl   '>
+        <main className='md:h-[304px] mx-auto  md:px-20 w-[90vw] md:w-[100vw] overflow-x-hidden  rouded-2xl   '>
             <img src='/utils/CoverHomeCta.jpeg' className='demo-bg w-[90vw] md:w-[cal(100vw - 160px)]' alt='Cover image' />
             <center className="demo-content py-[40px]">
                 <h5 className=' text-[24px] md:text-[32px] font-[#171C20]  text-center font-bold'>Zeoads for Agencies</h5>

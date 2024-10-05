@@ -4,7 +4,7 @@ type Props = {};
 
 export default function Cta({}: Props) {
   return (
-    <section className="text-center mx-5 md:mx-20 mt-48">
+    <section className="text-center mx-5 md:mx-20 md:mt-48">
       <h1 className="text-[20px] md:text-[56px] text-center font-bold text-[#1F2933]">
         Start now and launch your ads
       </h1>

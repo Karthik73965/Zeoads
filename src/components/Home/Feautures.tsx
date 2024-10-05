@@ -35,7 +35,7 @@ export default function Feautures({ }: Props) {
     return (
         <main className='md:px-20 mt-10 md:mt-0 px-5 pb-10 '>
             <h3 className='text-center font-medium text-[20px] md:text-[32px] '>We Can Provide Support for the Following Ad Platforms.</h3>
-            <section className='md:flex grid gap-y-5 justify-between mt-10'>
+            <section className='md:flex flex-wrap grid gap-y-5 justify-between mt-10'>
                 <FeauturesHome name='Facebook' Heading='Facebook Agency' description='Top tier Fb agency accounts with payment method activated.' image='/Home/adlogos/meta.svg' list={Facebookdata} />
                 <FeauturesHome name='Tiktok' Heading='Tiktok Agency' description='Scale effortlessly with our Tiktok Agency accounts.' image='/Home/adlogos/tiktok.svg' list={Tiktokdata} />
                 <FeauturesHome name='Google' Heading='Google Agency' description='Top tier Google agency accounts with payment method activated.' image='/Home/adlogos/google.svg' list={Googledata} />

@@ -22,7 +22,7 @@ export default function BlogCard({
   const router = useRouter();
   return (
     <section
-      className={`border-[1px] rounded-[8px] cursor-pointer w-[384px] shadow-md h-[453px] ${
+      className={`border-[1px] rounded-[8px] cursor-pointer md:w-[384px] w-[90vw] shadow-md h-[453px] ${
         main ? "border-[#4779E8]" : "border-[#E4E7EC]"
       } p-[24px] gap-[16px]`}
       onClick={() => router.push(`/blogs/${id}`)}
@@ -32,7 +32,7 @@ export default function BlogCard({
         className="w-[336px] h-[192px] rounded-[8px]"
         alt="something"
       />
-      <div className="mt-5 w-[336px] text-[#727F8F] text-[14px]h-[21px] flex justify-between">
+      <div className="mt-5 md:w-[336px] text-[#727F8F] text-[14px] h-[21px] flex justify-between">
         <div>Metaverse</div>
         <div>9 May 2024</div>
       </div>

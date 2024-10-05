@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from 'next/navigation';
 import React from 'react'
 import { TypeAnimation } from 'react-type-animation';
 
@@ -6,10 +7,12 @@ import { TypeAnimation } from 'react-type-animation';
 type Props = {}
 
 export default function Hero({ }: Props) {
+    const router = useRouter()
     return (
-        <main className='md:px-20 px-10 md:pt-[112px] pt-[102px] mt-10 md:flex flex-1  justify-between'>
+        <main className='md:px-20 px-10 w-[95vw] md:pt-[112px] pt-[102px] mt-10 md:flex flex-1 max-w-[100vw] overflow-x-hidden  justify-between'>
             <section>
-                <div className='flex gap-x-3 text-[20px] Neutral5'>Hey there, we&apos;re <span className='primary-text'> Zeoads</span> <img src='/home/handshake.svg' alt='handshake' /></div>
+                <div className='flex gap-x-3 text-[20px] Neutral5'>Hey there, we&apos;re <span className='primary-text'> Zeoads</span><div className='scale-125 mt-[-2px] -ml-1'>&#x1F44B;</div>
+                </div>
                 <h1 className='md:text-[56px] text-[32px] mt-5 font-bold md:w-[45vw] w-[84vw] leading-[44px]  md:leading-[70px]'>
                     <TypeAnimation
                         sequence={[
@@ -40,20 +43,28 @@ export default function Hero({ }: Props) {
                     </button>
                 </div>
             </section>
-            <section className='md:w-[50%] h-full flex '>
+            <section className='md:w-[50%] h-full flex overflow-x-hidden '>
                 <div className='grid gap-y-80 absolute'>
                     <img className='w-[22.31px] md:w-auto md:h-auto h-[22.31px]' src='/Home/avatar/2.svg' alt='avatar 1' />
                     <img className='w-[22.31px] -mt-20 md:-mt-0 md:w-auto md:h-auto h-[22.31px]' src='/Home/avatar/1.svg' alt='avatar 2' />
                 </div>
-                <div>
+                <div className=''>
                     <img src="/Home/chart.svg" className='z-10 md:ml-20 ml-10  relative' alt="" />
-                    <div className='gradient md:w-[558px] w-full h-[280px] -z-20 -mt-[300px] -ml-10 absolute'> &nbsp;</div>
+                    <div className='gradient md:w-[558px] w-[90vw] h-[280px] -z-20 -mt-[250px] -ml-10 absolute'> &nbsp;</div>
                 </div>
                 <div className='grid gap-y-80 ml-10'>
                     <img className='w-[30.31px] md:w-auto md:h-auto h-[30.31px]' src='/Home/avatar/3.svg' alt='avatar 3' />
                     <img className='w-[30.31px] -mt-20 md:-mt-0  md:w-auto md:h-auto h-[30.31px]' src='/Home/avatar/4.svg' alt='avatar 4' />
                 </div>
             </section>
+            <div className='mb-8 -mt-5  gap-y-[16px] grid md:hidden'>
+                    <button onClick={()=>router.push('/signup')} className='bg-[#4779E8] h-[48px] rounded-[4px] text-white '>
+                        Get started Today
+                    </button>
+                    <button onClick={()=>router.push('/zeoads-for-agencies')} className='bg-white  h-[48px] border-[#4779E8] border-[1px] rounded-[4px] primary-text '>
+                        Learn More
+                    </button>
+                </div>
         </main>
     )
 }

@@ -24,13 +24,6 @@ export default function Navbar({ route }: Props) {
     setShowMenu(!showMenu);
   };
 
-  const getAnnoncmenet = useCallback(async () => {
-    const data = await getAnnouncementBar();
-    if (data) {
-      setBarData(data.message);
-    }
-  }, []);
-
   const logout = () => {
     try {
       const res = logOut();
@@ -43,45 +36,48 @@ export default function Navbar({ route }: Props) {
       ErrorToast("Error occurred");
     }
   };
-
-  useEffect(() => {
-    getAnnoncmenet();
-  }, [getAnnoncmenet]);
-
   return (
     <>
-     <AnnoouncementBar/>
+      <AnnoouncementBar />
 
-      <nav className="h-[72px] w-full fixed z-50 bg-white border-b border-[#E4E7EC] md:px-20 px-10 flex justify-between items-center">
+      <nav className="h-[72px] w-full fixed z-50 bg-white border-b pt-2 border-[#E4E7EC] md:px-20 px-10 flex justify-between items-center">
         <img
           onClick={() => router.push("/")}
           src="/logo.svg"
-          className="w-[108px] h-[24px] cursor-pointer"
+          className="w-[118px] h-[28px] cursor-pointer"
           alt="logo"
         />
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-x-[40px]">
           <li
             onClick={() => router.push("/")}
-            className={`cursor-pointer ${route == "Home" ? "primary-text" : "text-gray-600"}`}
+            className={`cursor-pointer ${
+              route == "Home" ? "primary-text" : "text-gray-600"
+            }`}
           >
             Home
           </li>
           <li
             onClick={() => router.push("/pricing")}
-            className={`cursor-pointer ${route == "Pricing" ? "primary-text" : "text-gray-600"}`}
+            className={`cursor-pointer ${
+              route == "Pricing" ? "primary-text" : "text-gray-600"
+            }`}
           >
             Pricing
           </li>
           <li
             onClick={() => router.push("/zeoads-for-agencies")}
-            className={`cursor-pointer ${route == "Zeoads" ? "primary-text" : "text-gray-600"}`}
+            className={`cursor-pointer ${
+              route == "Zeoads" ? "primary-text" : "text-gray-600"
+            }`}
           >
             Zeoads for agencies
           </li>
           <li
             onClick={() => router.push("/blogs")}
-            className={`cursor-pointer ${route == "Blog" ? "primary-text" : "text-gray-600"} flex`}
+            className={`cursor-pointer ${
+              route == "Blog" ? "primary-text" : "text-gray-600"
+            } flex`}
           >
             Blog
             <div className="w-[47px] text-white h-[25px] bg-[#4779E8] text-center rounded-[4px] ml-2">
@@ -120,7 +116,10 @@ export default function Navbar({ route }: Props) {
         )}
 
         {/* Mobile Hamburger */}
-        <div onClick={toggleMenu} className="block md:hidden cursor-pointer text-3xl">
+        <div
+          onClick={toggleMenu}
+          className="block md:hidden cursor-pointer text-3xl"
+        >
           <VscMenu />
         </div>
       </nav>
@@ -145,14 +144,16 @@ export default function Navbar({ route }: Props) {
             <AiOutlineClose />
           </span>
         </div>
-          {/* Mobile Menu Links */}
+        {/* Mobile Menu Links */}
         <ul className="flex flex-col   pl-5 space-y-5">
           <li
             onClick={() => {
               router.push("/");
               toggleMenu();
             }}
-            className={`cursor-pointer ${route == "Home" ? "primary-text" : "text-gray-600"}`}
+            className={`cursor-pointer ${
+              route == "Home" ? "primary-text" : "text-gray-600"
+            }`}
           >
             Home
           </li>
@@ -161,7 +162,9 @@ export default function Navbar({ route }: Props) {
               router.push("/pricing");
               toggleMenu();
             }}
-            className={`cursor-pointer ${route == "Pricing" ? "primary-text" : "text-gray-600"}`}
+            className={`cursor-pointer ${
+              route == "Pricing" ? "primary-text" : "text-gray-600"
+            }`}
           >
             Pricing
           </li>
@@ -170,7 +173,9 @@ export default function Navbar({ route }: Props) {
               router.push("/zeoads-for-agencies");
               toggleMenu();
             }}
-            className={`cursor-pointer ${route == "Zeoads" ? "primary-text" : "text-gray-600"}`}
+            className={`cursor-pointer ${
+              route == "Zeoads" ? "primary-text" : "text-gray-600"
+            }`}
           >
             Zeoads for agencies
           </li>
@@ -179,7 +184,9 @@ export default function Navbar({ route }: Props) {
               router.push("/blogs");
               toggleMenu();
             }}
-            className={`cursor-pointer ${route == "Blog" ? "primary-text" : "text-gray-600"}`}
+            className={`cursor-pointer ${
+              route == "Blog" ? "primary-text" : "text-gray-600"
+            }`}
           >
             Blog
           </li>

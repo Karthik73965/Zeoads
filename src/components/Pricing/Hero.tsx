@@ -1,9 +1,24 @@
+"use client"
 import React from "react";
 import PricingChild from "./PricingChild";
+import { useUserInfo } from "@/hooks/useUserInfo";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 export default function Hero({}: Props) {
+
+  const userinfo = useUserInfo()
+  const router = useRouter()
+
+  const redirect = ()=>{
+    if(userinfo?.id) {
+      router.push('/billing/Plans')
+    }else{
+      router.push('/signup')
+    }
+  }
+
   return (
     <main className="px-5 md:px-20 pt-[80px] mt-10 ">
       <h1 className="text-center text-[20px] md:text-[56px] font-bold text-[#1F2933]">
@@ -17,13 +32,13 @@ export default function Hero({}: Props) {
           <div className="md:w-[548px] w-[50%] bg-[#131516] h-[77px] md:h-[117px]  md:p-[24px] p-2 text-white border-[1px] border-[#E4E7EC] rounded-[8px] md:text-center">
             <h3 className="font-medim   text-[14px] md:text-[24px]">
               Recharge Via Self
-              <p className="text-center text-[10px] -ml-6 md:-ml-0  mt-2 md:mt-0 md:text-[14px] text-[#E4E7EC]">
+              <p className="text-center text-[10px]  md:-ml-0  mt-2 md:mt-0 md:text-[14px] text-[#E4E7EC]">
                 {"(Non Commission Model)"}
               </p>
             </h3>
           </div>
         </section>
-        <section className="flex px-3 md:px-0 gap-[24px]">
+        <section className="flex px-3 md:px-0 gap-2 md:gap-[24px]">
           <PricingChild
             image1={"/pricing/img1.png"}
             text1="Spending Limit"
@@ -58,12 +73,12 @@ export default function Hero({}: Props) {
             image7={undefined}
             text7={`No Hidden Charges , No Maintainance or Monthly Charges`}
             image8={undefined}
-            text8="INR Accounts - Prepaid<br>USD Accounts - Postpaid"
+            text8="INR Accounts - Prepaid USD Accounts - Postpaid"
           />
         </section>
-        <section className="gap-[24px] border-[1px]  border-[#E4E7EC] p-[16px] flex justify-between rounded-[8px]">
-          <div className="w-full bg-[#4779E8] h-[100px] p-[24px] text-white border-[1px] border-[#E4E7EC] rounded-[8px] text-center">
-            <h3 className="font-semibold text-[32px]    ">5999 INR</h3>
+        <section className="gap-[24px] border-[1px] mt-5 md:mt-0  border-[#E4E7EC] p-[16px] flex justify-between rounded-[8px]">
+          <div onClick={()=>redirect()} className="w-full bg-[#4779E8] h-[100px] cursor-pointer p-[24px] text-white border-[1px] border-[#E4E7EC] rounded-[8px] text-center">
+            <h3 className="font-semibold text-[32px] ">5999 INR</h3>
           </div>
         </section>
       </section>

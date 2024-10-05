@@ -21,7 +21,7 @@ export default function AnnouncementBar({}: Props) {
   }, []); // Fetch announcement on mount
 
   return (
-    <header className="h-[47px] fixed z-[1000] -mt-10 text-white text-center py-2 w-full bg-black ">
+    <header className="h-[47px] fixed z-[1000] -mt-10 text-white text-[12px] md:text-[16px] text-center py-4 md:py-2 w-full bg-black ">
       {barData ? <div>{barData.message}</div> : null}
     </header>
   );
