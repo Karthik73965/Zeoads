@@ -82,10 +82,6 @@ export default function MainFund({}: Props) {
         </div>
         {/* filter */}
         <div className="flex gap-[px]">
-          <div className=" w-[103px] h-[56px] flex rounded-[8px] bg-white gap-[8px] ml-10 border-[1px] border-[#CBD2DA] p-[16px]">
-            Filter
-            <img src="/utils/filter.svg" alt="share" />
-          </div>
           <div className="w-[56px] h-[56px] rounded-[8px] bg-white gap-[8px] ml-10 border-[1px] border-[#CBD2DA] p-[16px]">
             <img src="/userDash/Agencies/share.svg" alt="share" />
           </div>

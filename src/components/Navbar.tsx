@@ -4,7 +4,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
-import { getAnnouncementBar } from "@/actions/admin/ProductActions";
 import { logOut } from "@/actions/AuthActions";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import { ErrorToast, SucessToast } from "@/utils/ToastFucntion";

@@ -4,16 +4,16 @@ type Props = {};
 
 export default function Compare({}: Props) {
   return (
-    <main className="md:mx-20 mx-5 mt-20 pt-10">
+    <main className="md:mx-20 mx-5 md:mt-20 d:pt-10">
       <h1 className="font-bold  text-[#1F2933] text-[24px] md:text-[56px] text-center">
         Compare Facebook ads
       </h1>
-      <h3 className="Text-center text-[#4779E8]  mt-10 text-center text-[14px] md:text-[24px] md:w-[1200px] font-medium bg-[#F5F6FA] py-[12px] px-[24px]">
+      <h3 className="Text-center hidden sm:block text-[#4779E8]  mt-10 text-center text-[14px] md:text-[24px] md:w-full font-medium bg-[#F5F6FA] py-[12px] px-[24px]">
         Why choose Zeoads advertising accounts?
       </h3>
 
       {/* table */}
-      <section className="grid w-full max-w-[100vw] scale-90 md:scale-100  overflow-x-scroll ">
+      <section className=" w-full hidden sm:grid max-w-[100vw] scale-90 md:scale-100  overflow-x-scroll ">
         <section className="flex">
           <div className="border-[1px] border-[#E4E7EC] px-[10px] py-[12px] text-center w-[41px] x md:w-[180px]  h-[56px]"></div>
           <div className="border-[1px] border-[#E4E7EC] text-[14px] md:text-[24px] font-medium px-[10px] py-[12px] text-center w-[510px] h-[56px]">
@@ -111,6 +111,9 @@ export default function Compare({}: Props) {
             </section>
           </section>
         </section>
+      </section>
+      <section className="block sm:hidden ">
+        <img className="mx-auto mb-5" src="/pricingChild.svg" alt="pricing" />
       </section>
     </main>
   );
